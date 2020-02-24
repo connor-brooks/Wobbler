@@ -95,6 +95,9 @@ int main(int argc, char* args[])
   user_pointers.gui_cont = new GUI_Container();
 
   Control first, second, third;
+  first.assign_control(&user_pointers.synth->carrier_freq, 0, 800);
+  second.assign_control(&user_pointers.synth->modulator_freq, 0, 100);
+
   user_pointers.gui_cont->add(&first);
   user_pointers.gui_cont->add(&second);
   user_pointers.gui_cont->add(&third);
@@ -126,8 +129,8 @@ int main(int argc, char* args[])
       }
 
       /* debug */
-      user_pointers.synth->set_carrier_freq(mouse_x * 400);
-      user_pointers.synth->set_modulator_freq(mouse_y * 30);
+      //user_pointers.synth->set_carrier_freq(mouse_x * 400);
+      //user_pointers.synth->set_modulator_freq(mouse_y * 30);
     }
 
     render(&user_pointers);

@@ -8,6 +8,8 @@ class Control {
     void setVerts();
     float amount;
     void update(float mouse_y);
+    float* to_control_ptr;
+    float to_control_min, to_control_max;
   public:
     Control();
     void set_pos(float x, float y);
@@ -17,5 +19,6 @@ class Control {
     float get_width();
     void draw();
     bool intersect(float x, float y);
+    void assign_control(float* ptr, float min, float max);
 };
 #endif

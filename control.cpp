@@ -26,6 +26,9 @@ Control::Control()
   max_height = 1.6;
   setVerts();
   amount = 1.0f;
+  to_control_ptr = NULL;
+  to_control_min = 0.0f;
+  to_control_max = 1.0f;
 }
 
 void Control::set_pos(float x, float y)
@@ -78,5 +81,15 @@ void Control::update(float mouse_y) {
   if(!(amount > 1.0) && !(amount <0.0)){
     height = max_height * amount;
     setVerts();
+    printf("intersect\n");
+    if(to_control_ptr != NULL)
+    *to_control_ptr = amount * to_control_max;
   }
+}
+
+void Control::assign_control(float* ptr, float min, float max)
+{
+  to_control_ptr = ptr;
+  to_control_min = min;
+  to_control_max = max;
 }
