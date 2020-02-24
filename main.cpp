@@ -8,32 +8,8 @@
 #include "synth.h"
 #include "control.h"
 #include "gui_container.h"
-
-const int AMPLITUDE = 28000;
-const int SAMPLE_RATE = 44100;
-const int BUFFER = 2048;
-const int WIDTH = 680;
-const int HEIGHT = 480;
-
-void to_gl_coords(float* x, float* y, int wi_width, int wi_height){
-  int cur_x, cur_y;
-  SDL_GetMouseState(&cur_x, &cur_y);
-  float c_x = (float) cur_x / (float) WIDTH;
-  float c_y = (float) cur_y / (float) HEIGHT;
-  c_x = (c_x * 2) - 1;
-  c_y = -((c_y * 2) - 1);
-  printf("mouse x %f y %f\n", c_x, c_y);
-  *x = c_x;
-  *y = c_y;
-}
-
-struct User_pointers {
-  int* sample_num;
-  Synth* synth;
-  GUI_Container* gui_cont;
-  float* mouse_x, *mouse_y;
-};
-
+#include "utils.h"
+#include "defs.h"
 
 void init_sdl();
 void init_audio(User_pointers* user_ptrs);
