@@ -125,10 +125,6 @@ int main(int argc, char* args[])
       {
         should_quit = true;
       }
-
-      /* debug */
-      //user_pointers.synth->set_carrier_freq(mouse_x * 400);
-      //user_pointers.synth->set_modulator_freq(mouse_y * 30);
     }
 
     render(&user_pointers);
