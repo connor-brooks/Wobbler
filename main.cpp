@@ -133,11 +133,8 @@ int main(int argc, char* args[])
     render(&user_pointers);
     SDL_GL_SwapWindow(user_pointers.window);
 
-    first.intersect(mouse_x, mouse_y);
-    second.intersect(mouse_x, mouse_y);
+    user_pointers.gui_cont->intersect(mouse_x, mouse_y);
 
-
-    
   }
   quit(&user_pointers);
   return 0;

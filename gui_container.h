@@ -13,5 +13,6 @@ class GUI_Container {
     GUI_Container();
     void add(Control* item);
     void draw();
+    void intersect(float x, float y);
 };
 #endif

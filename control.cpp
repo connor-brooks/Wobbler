@@ -54,7 +54,6 @@ float Control::get_width() {
   return width;
 }
 
-
 void Control::draw()
 {
   glBegin(GL_QUADS);
@@ -72,12 +71,6 @@ bool Control::intersect(float x, float y) {
     update(y);
   }
   return true;
-}
-
-float Control::amount_at_y(float y)
-{
-  float amt = (y - yPos) / max_height;
-  return amt;
 }
 
 void Control::update(float mouse_y) {

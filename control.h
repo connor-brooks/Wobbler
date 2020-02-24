@@ -7,7 +7,6 @@ class Control {
     float verts[4][2];
     void setVerts();
     float amount;
-    float amount_at_y(float y);
     void update(float mouse_y);
   public:
     Control();
