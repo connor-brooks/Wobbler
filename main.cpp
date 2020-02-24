@@ -70,7 +70,7 @@ void render(User_pointers* user_ptrs)
 {
   glClear(GL_COLOR_BUFFER_BIT);
 
-  user_ptrs->gui_cont->draw();
+  user_ptrs->gui_container->draw();
 
   //draw cursor (debug)
   glPointSize(10);
@@ -93,7 +93,8 @@ int main(int argc, char* args[])
 
   struct User_pointers user_pointers;
   user_pointers.sample_num = new int(0);
-  user_pointers.synth = new Synth();
+  Synth synth;
+  user_pointers.synth = &synth;
 
   init_sdl(&user_pointers);
   SDL_Event events;
@@ -107,14 +108,15 @@ int main(int argc, char* args[])
   to_gl_coords(&mouse_x, &mouse_y, WIDTH, HEIGHT);
 
   Control first, second, third;
-  first.assign_control(&user_pointers.synth->carrier_freq, 0, 800);
-  second.assign_control(&user_pointers.synth->modulator_freq, 0, 50);
-  third.assign_control(&user_pointers.synth->amplitude, 0, 1);
+  first.assign_control(&synth.carrier_freq, 0, 800);
+  second.assign_control(&synth.modulator_freq, 0, 50);
+  third.assign_control(&synth.amplitude, 0, 1);
 
-  user_pointers.gui_cont = new GUI_Container();
-  user_pointers.gui_cont->add(&first);
-  user_pointers.gui_cont->add(&second);
-  user_pointers.gui_cont->add(&third);
+  GUI_Container gui_container;
+  user_pointers.gui_container = &gui_container;
+  gui_container.add(&first);
+  gui_container.add(&second);
+  gui_container.add(&third);
 
   while(!should_quit)
   {
@@ -130,7 +132,7 @@ int main(int argc, char* args[])
     render(&user_pointers);
     SDL_GL_SwapWindow(user_pointers.window);
 
-    user_pointers.gui_cont->intersect(mouse_x, mouse_y);
+    gui_container.intersect(mouse_x, mouse_y);
 
   }
   quit(&user_pointers);

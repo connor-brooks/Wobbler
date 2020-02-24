@@ -13,7 +13,7 @@ const int HEIGHT = 480;
 struct User_pointers {
   int* sample_num;
   Synth* synth;
-  GUI_Container* gui_cont;
+  GUI_Container* gui_container;
   float* mouse_x, *mouse_y;
   SDL_Window* window;
   SDL_GLContext context;
