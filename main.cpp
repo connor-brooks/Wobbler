@@ -89,35 +89,32 @@ void quit(User_pointers* user_ptrs)
 int main(int argc, char* args[])
 {
 
+  bool should_quit = false;
+
   struct User_pointers user_pointers;
   user_pointers.sample_num = new int(0);
   user_pointers.synth = new Synth();
-  user_pointers.gui_cont = new GUI_Container();
 
-  Control first, second, third;
-  first.assign_control(&user_pointers.synth->carrier_freq, 0, 800);
-  second.assign_control(&user_pointers.synth->modulator_freq, 0, 50);
-  third.assign_control(&user_pointers.synth->amplitude, 0, 1);
-
-  user_pointers.gui_cont->add(&first);
-  user_pointers.gui_cont->add(&second);
-  user_pointers.gui_cont->add(&third);
+  init_sdl(&user_pointers);
+  SDL_Event events;
+  init_gl();
+  init_audio(&user_pointers);
+  SDL_PauseAudio(0);
 
   float mouse_x, mouse_y;
   user_pointers.mouse_x = &mouse_x;
   user_pointers.mouse_y = &mouse_y;
   to_gl_coords(&mouse_x, &mouse_y, WIDTH, HEIGHT);
 
-  bool should_quit = false;
+  Control first, second, third;
+  first.assign_control(&user_pointers.synth->carrier_freq, 0, 800);
+  second.assign_control(&user_pointers.synth->modulator_freq, 0, 50);
+  third.assign_control(&user_pointers.synth->amplitude, 0, 1);
 
-  init_sdl(&user_pointers);
-  SDL_Event events;
-
-  init_gl();
-  init_audio(&user_pointers);
-
-  SDL_PauseAudio(0);
-
+  user_pointers.gui_cont = new GUI_Container();
+  user_pointers.gui_cont->add(&first);
+  user_pointers.gui_cont->add(&second);
+  user_pointers.gui_cont->add(&third);
 
   while(!should_quit)
   {
