@@ -96,7 +96,8 @@ int main(int argc, char* args[])
 
   Control first, second, third;
   first.assign_control(&user_pointers.synth->carrier_freq, 0, 800);
-  second.assign_control(&user_pointers.synth->modulator_freq, 0, 100);
+  second.assign_control(&user_pointers.synth->modulator_freq, 0, 50);
+  third.assign_control(&user_pointers.synth->amplitude, 0, 1);
 
   user_pointers.gui_cont->add(&first);
   user_pointers.gui_cont->add(&second);

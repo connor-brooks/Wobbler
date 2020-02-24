@@ -9,6 +9,7 @@ class Synth {
     void set_modulator_freq(float freq);
     float carrier_freq;
     float modulator_freq;
+    float amplitude;
   private:
     maxiOsc carrier, modulator;
 };

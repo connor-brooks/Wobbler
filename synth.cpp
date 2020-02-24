@@ -6,11 +6,12 @@
       std::cout << "init" << std::endl;
       carrier_freq = 440;
       modulator_freq = 1;
+      amplitude = 1.0f;
     }
 
     double Synth::tick() {
-      return AMPLITUDE *
-        carrier.sinewave(carrier_freq +
+      return AMPLITUDE * amplitude *
+        carrier.square(carrier_freq +
             (modulator.sinewave(modulator_freq)*100)
             );
     }
