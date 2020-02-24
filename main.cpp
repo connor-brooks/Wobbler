@@ -4,23 +4,13 @@
 #include <SDL2/SDL_audio.h>
 #include <SDL2/SDL_ttf.h>
 #include <OpenGL/glu.h>
+#include "main.h"
 #include "libs/maximilian.h"
 #include "synth.h"
 #include "control.h"
 #include "gui_container.h"
 #include "utils.h"
 #include "defs.h"
-
-void init_sdl();
-void init_audio(User_pointers* user_ptrs);
-void audio_callback();
-void init_gl();
-void render(User_pointers* user_ptrs);
-void quit();
-
-SDL_Window* window = NULL;
-SDL_GLContext context;
-
 
 void audio_callback(void *user_data, Uint8 *raw_buffer, int bytes)
 {
@@ -38,17 +28,17 @@ void audio_callback(void *user_data, Uint8 *raw_buffer, int bytes)
   }
 }
 
-void init_sdl() {
+void init_sdl(User_pointers* user_ptrs) {
   SDL_Init(SDL_INIT_VIDEO);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-  window = SDL_CreateWindow("WobWob",SDL_WINDOWPOS_CENTERED,
+  SDL_Window* window = SDL_CreateWindow("WobWob",SDL_WINDOWPOS_CENTERED,
       SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
-  context = SDL_GL_CreateContext(window);
+  SDL_GLContext context = SDL_GL_CreateContext(window);
   SDL_GL_SetSwapInterval(1);
 
-
-  TTF_Init();
+  user_ptrs->window = window;
+  user_ptrs->context = context;
 }
 
 void init_audio(User_pointers* user_ptrs)
@@ -61,7 +51,6 @@ void init_audio(User_pointers* user_ptrs)
   spec_want.channels = 1;
   spec_want.samples = BUFFER;
   spec_want.callback = audio_callback;
-  //spec_want.userdata = &sample_num;
   spec_want.userdata = user_ptrs;
 
   SDL_OpenAudio(&spec_want, &spec_have);
@@ -83,7 +72,7 @@ void render(User_pointers* user_ptrs)
 
   user_ptrs->gui_cont->draw();
 
-  //draw cursor
+  //draw cursor (debug)
   glPointSize(10);
   glBegin(GL_POINTS);
   glVertex2f(*user_ptrs->mouse_x, *user_ptrs->mouse_y);
@@ -91,9 +80,9 @@ void render(User_pointers* user_ptrs)
 
 }
 
-void quit()
+void quit(User_pointers* user_ptrs)
 {
-  SDL_DestroyWindow(window);
+  SDL_DestroyWindow(user_ptrs->window);
   SDL_Quit();
 }
 
@@ -117,7 +106,7 @@ int main(int argc, char* args[])
 
   bool should_quit = false;
 
-  init_sdl();
+  init_sdl(&user_pointers);
   SDL_Event events;
 
   init_gl();
@@ -142,8 +131,9 @@ int main(int argc, char* args[])
     }
 
     render(&user_pointers);
-    SDL_GL_SwapWindow(window);
+    SDL_GL_SwapWindow(user_pointers.window);
+    
   }
-  quit();
+  quit(&user_pointers);
   return 0;
 }
