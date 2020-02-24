@@ -29,7 +29,7 @@ GUI_Container::GUI_Container() {
       if(control_count == 0)
         return;
       for(int i = 0; i < control_count; i++) {
-        printf("Control %d\n", i);
+        //printf("Control %d\n", i);
         controls.at(i)->draw();
       }
     }

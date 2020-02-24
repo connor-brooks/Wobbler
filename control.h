@@ -3,8 +3,12 @@
 class Control {
     float xPos, yPos;
     float width, height;
+    float max_height;
     float verts[4][2];
     void setVerts();
+    float amount;
+    float amount_at_y(float y);
+    void update(float mouse_y);
   public:
     Control();
     void set_pos(float x, float y);
@@ -13,5 +17,6 @@ class Control {
     float get_y();
     float get_width();
     void draw();
+    bool intersect(float x, float y);
 };
 #endif
