@@ -84,10 +84,14 @@ int main(int argc, char* args[])
   to_gl_coords(&mouse_x, &mouse_y, WIDTH, HEIGHT);
 
   /* Assign button control */
-  Control first, second, third;
+  Control first, second, third, forth;
   first.assign_control([&](float freq){synth.set_carrier_freq(freq);}, 
       0, 800);
   second.assign_control([&](float freq){synth.set_modulator_freq(freq);}, 
+      0, 50);
+  third.assign_control([&](float freq){synth.trigger_note(freq);}, 
+      0, 50);
+  forth.assign_control([&](float freq){synth.trigger_note_off(freq);}, 
       0, 50);
 
   /* setup gui */
@@ -96,6 +100,7 @@ int main(int argc, char* args[])
   gui_container.add(&first);
   gui_container.add(&second);
   gui_container.add(&third);
+  gui_container.add(&forth);
 
   /* main loop */
   while(!should_quit)
