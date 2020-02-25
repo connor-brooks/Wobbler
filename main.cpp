@@ -65,7 +65,6 @@ int main(int argc, char* args[])
 
   bool should_quit = false;
 
-
   /* create needed struct */
   struct User_pointers user_pointers;
   user_pointers.sample_num = new int(0);
@@ -87,10 +86,10 @@ int main(int argc, char* args[])
 
   /* Assign button control */
   Control first, second, third, forth;
-  first.assign_control([&](float freq){synth.set_carrier_freq(freq);}, 
+  first.assign_control([&](float freq){synth.set_detune_freq(freq);}, 
       0, 800);
   second.assign_control([&](float freq){synth.set_modulator_freq(freq);}, 
-      0, 50);
+      0, 100);
   third.assign_control([&](float freq){synth.trigger_note(freq);}, 
       0, 50);
   forth.assign_control([&](float freq){synth.trigger_note_off(freq);}, 
@@ -112,6 +111,7 @@ int main(int argc, char* args[])
   /* main loop */
   while(!should_quit)
   {
+    /* Deal with events */
     while(SDL_PollEvent(&events) != 0)
     {
       if(events.type == SDL_QUIT)
@@ -122,6 +122,7 @@ int main(int argc, char* args[])
         keyboard.handle_keys(events);
     }
 
+    /* Update and render */
     update(&user_pointers);
     render(&user_pointers);
     SDL_GL_SwapWindow(user_pointers.window);
