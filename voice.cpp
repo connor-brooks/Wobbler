@@ -9,10 +9,13 @@ Voice::Voice() {
   amplitude = 1.0f;
   note_on = 0;
 
-  this->env.setAttack(50);
+  adsr.attack = 50;
+  adsr.release = 300;
+
+  this->env.setAttack(adsr.attack);
   this->env.setDecay(1);
   this->env.setSustain(1);
-  this->env.setRelease(300);
+  this->env.setRelease(adsr.release);
 }
 
 double Voice::tick() {
@@ -37,4 +40,14 @@ note_on = 1;
 
 void Voice::trigger_off() {
 note_on = 0;
+}
+
+void Voice::set_attack(float val) {
+  adsr.attack = val;
+  env.setAttack(adsr.attack);
+}
+
+void Voice::set_release(float val) {
+  adsr.release = val;
+  env.setRelease(adsr.release);
 }

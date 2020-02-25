@@ -13,6 +13,8 @@ class Synth {
 
     void trigger_note(int note);
     void trigger_note_off(int note);
+    void set_attack(float val);
+    void set_release(float val);
 
   private:
     float modulator_freq;

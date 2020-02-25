@@ -90,10 +90,10 @@ int main(int argc, char* args[])
       0, 800);
   second.assign_control([&](float freq){synth.set_modulator_freq(freq);}, 
       0, 100);
-  third.assign_control([&](float freq){synth.trigger_note(freq);}, 
-      0, 50);
-  forth.assign_control([&](float freq){synth.trigger_note_off(freq);}, 
-      0, 50);
+  third.assign_control([&](float freq){synth.set_attack(freq);}, 
+      0, 6000);
+  forth.assign_control([&](float freq){synth.set_release(freq);}, 
+      0, 6000);
 
   /* Assign keyboard callbacks */
   Keyboard keyboard;

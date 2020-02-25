@@ -41,3 +41,9 @@ void Synth::set_detune_freq(float freq)
 {
   detune = freq;
 }
+void Synth::set_attack(float val) {
+  voices.at(0).set_attack(val);
+}
+void Synth::set_release(float val){
+  voices.at(0).set_release(val);
+}
