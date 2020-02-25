@@ -28,6 +28,24 @@ void Keyboard::handle_keys(SDL_Event e) {
       case 'f':
         keydown_callback(41);
         break;
+      case 't':
+        keydown_callback(42);
+        break;
+      case 'g':
+        keydown_callback(43);
+        break;
+      case 'y':
+        keydown_callback(44);
+        break;
+      case 'h':
+        keydown_callback(45);
+        break;
+      case 'u':
+        keydown_callback(46);
+        break;
+      case 'j':
+        keydown_callback(47);
+        break;
 
       default:
         break;
