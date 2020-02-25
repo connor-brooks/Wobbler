@@ -12,6 +12,7 @@
 #include "gui_container.h"
 #include "utils.h"
 #include "defs.h"
+#include "keyboard.h"
 
 void audio_callback(void *user_data, Uint8 *raw_buffer, int bytes)
 {
@@ -64,6 +65,7 @@ int main(int argc, char* args[])
 
   bool should_quit = false;
 
+
   /* create needed struct */
   struct User_pointers user_pointers;
   user_pointers.sample_num = new int(0);
@@ -94,6 +96,11 @@ int main(int argc, char* args[])
   forth.assign_control([&](float freq){synth.trigger_note_off(freq);}, 
       0, 50);
 
+  /* Assign keyboard callbacks */
+  Keyboard keyboard;
+  keyboard.set_keydown_callback([&](int num) {synth.trigger_note(num);});
+  keyboard.set_keyup_callback([&](int num) {synth.trigger_note_off(num);});
+
   /* setup gui */
   GUI_Container gui_container;
   user_pointers.gui_container = &gui_container;
@@ -111,6 +118,8 @@ int main(int argc, char* args[])
       {
         should_quit = true;
       }
+      if(events.type == SDL_TEXTINPUT || events.type == SDL_KEYUP)
+        keyboard.handle_keys(events);
     }
 
     update(&user_pointers);
