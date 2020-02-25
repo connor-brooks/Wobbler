@@ -7,11 +7,11 @@ class Synth {
     double tick();
     void set_carrier_freq(float freq);
     void set_modulator_freq(float freq);
+  private:
+    maxiOsc carrier, modulator;
     float carrier_freq;
     float modulator_freq;
     float amplitude;
-  private:
-    maxiOsc carrier, modulator;
 };
 
 #endif
