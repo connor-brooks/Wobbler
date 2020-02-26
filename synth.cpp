@@ -12,6 +12,8 @@ Synth::Synth() {
   Voice main;
   cutoff = 1;
   voices.push_back(main);
+  adsr.attack = 50;
+  adsr.release = 300;
 }
 
 double Synth::tick() {
@@ -46,11 +48,22 @@ void Synth::set_detune_freq(float freq)
   detune = freq;
 }
 void Synth::set_attack(float val) {
-  voices.at(0).set_attack(val);
+  adsr.attack = val;
+  voices.at(0).set_attack(adsr.attack);
 }
 void Synth::set_release(float val){
-  voices.at(0).set_release(val);
+  adsr.release = val;
+  voices.at(0).set_release(adsr.release);
 }
 void Synth::set_cutoff(float freq) {
   cutoff = freq;
+}
+
+Voice* Synth::new_voice(int note, float detune, float modulator_f) {
+  Voice* temp = new Voice;
+  temp->set_modulator_freq(modulator_freq);
+  temp->set_attack(adsr.attack);
+  temp->set_release(adsr.release);
+  // set default note (move note conversion to voice)
+  return temp;
 }

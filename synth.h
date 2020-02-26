@@ -15,7 +15,6 @@ class Synth {
     void trigger_note_off(int note);
     void set_attack(float val);
     void set_release(float val);
-
     void set_cutoff(float freq);
 
   private:
@@ -25,7 +24,12 @@ class Synth {
     float amplitude;
     float midi_to_freq(int note);
     float detune;
+    Voice* new_voice(int note, float detune, float modulator_f);
     std::vector<Voice> voices;
+    struct {
+      float attack;
+      float release;
+    } adsr;
 
 };
 

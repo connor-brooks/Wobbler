@@ -23,12 +23,12 @@ double Voice::tick() {
     carrier.square(carrier_freq +
         (modulator.sinewave(modulator_freq)*100)
         );
-  float envP = env.adsr(1, note_on);
+  float envolope = env.adsr(1, note_on);
   /* for debug */
 //  printf("wave %f\n", envP);
 //  if(envP < 0.00001)
 //    printf("Wave ended\n");
-  return wave * envP;
+  return wave * envolope;
 }
 
 void Voice::set_carrier_freq(float freq) {
