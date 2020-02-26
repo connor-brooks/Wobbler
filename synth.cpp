@@ -10,11 +10,14 @@ Synth::Synth() {
   modulator_freq = 1;
   amplitude = 1.0f;
   Voice main;
+  cutoff = 1;
   voices.push_back(main);
 }
 
 double Synth::tick() {
-  return voices.at(0).tick();
+  float wave = voices.at(0).tick();
+  /* debug, add switch */
+  return filter.lopass(wave, cutoff);
 }
 
 void Synth::set_carrier_freq(float freq) {
@@ -30,6 +33,7 @@ void Synth::trigger_note(int note)
   voices.at(0).set_carrier_freq(midi_to_freq(note) + detune);
   voices.at(0).trigger();
 }
+
 void Synth::trigger_note_off(int note){
   voices.at(0).trigger_off();
 }
@@ -46,4 +50,7 @@ void Synth::set_attack(float val) {
 }
 void Synth::set_release(float val){
   voices.at(0).set_release(val);
+}
+void Synth::set_cutoff(float freq) {
+  cutoff = freq;
 }

@@ -648,7 +648,6 @@ double maxiFractionalDelay::dl ( double sig, double delayTime, double feedback )
     if (++writePointer >= delaySize)
         writePointer -= delaySize;
     return y;
-    
 }
 
 
