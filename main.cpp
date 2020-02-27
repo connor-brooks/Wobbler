@@ -85,17 +85,19 @@ int main(int argc, char* args[])
   to_gl_coords(&mouse_x, &mouse_y, WIDTH, HEIGHT);
 
   /* Assign button control */
-  Control first, second, third, forth, fifth;
+  Control first, second, third, forth, fifth, sixth;
   first.assign_control([&](float freq){synth.set_detune_freq(freq);}, 
       0, 8);
   second.assign_control([&](float freq){synth.set_modulator_freq(freq);}, 
-      0, 100);
+      0, 4000);
   third.assign_control([&](float freq){synth.set_attack(freq);}, 
       0, 6000);
   forth.assign_control([&](float freq){synth.set_release(freq);}, 
       0, 6000);
   fifth.assign_control([&](float freq){synth.set_cutoff(freq);}, 
       0, 1);
+  sixth.assign_control([&](float freq){synth.set_lfo_freq(freq);}, 
+      0, 20);
 
   /* Assign keyboard callbacks */
   Keyboard keyboard;
@@ -110,6 +112,7 @@ int main(int argc, char* args[])
   gui_container.add(&third);
   gui_container.add(&forth);
   gui_container.add(&fifth);
+  gui_container.add(&sixth);
 
   /* main loop */
   while(!should_quit)

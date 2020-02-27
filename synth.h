@@ -16,9 +16,12 @@ class Synth {
     void set_attack(float val);
     void set_release(float val);
     void set_cutoff(float freq);
+    void set_lfo_freq(float freq);
 
   private:
+    maxiOsc lfo;
     maxiFilter filter;
+    float lfo_freq;
     float cutoff;
     float modulator_freq;
     float amplitude;

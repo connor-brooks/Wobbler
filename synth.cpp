@@ -14,12 +14,15 @@ Synth::Synth() {
   voices.push_back(main);
   adsr.attack = 50;
   adsr.release = 300;
+  lfo_freq = 1;
+  set_lfo_freq(lfo_freq);
 }
 
 double Synth::tick() {
   float wave = voices.at(0).tick();
-  /* debug, add switch */
-  return filter.lopass(wave, cutoff);
+  /* Calculate the filters cutoff value using LFO */
+  float lfo_freq_calc = cutoff * abs(lfo.sinewave(lfo_freq));
+  return filter.lopass(wave, lfo_freq_calc);
 }
 
 void Synth::set_carrier_freq(float freq) {
@@ -66,4 +69,8 @@ Voice* Synth::new_voice(int note, float detune, float modulator_f) {
   temp->set_release(adsr.release);
   // set default note (move note conversion to voice)
   return temp;
+}
+
+void Synth::set_lfo_freq(float freq) {
+lfo_freq = freq;
 }
