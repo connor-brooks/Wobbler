@@ -87,7 +87,7 @@ int main(int argc, char* args[])
   /* Assign button control */
   Control first, second, third, forth, fifth;
   first.assign_control([&](float freq){synth.set_detune_freq(freq);}, 
-      0, 800);
+      0, 8);
   second.assign_control([&](float freq){synth.set_modulator_freq(freq);}, 
       0, 100);
   third.assign_control([&](float freq){synth.set_attack(freq);}, 
