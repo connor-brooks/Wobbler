@@ -35,7 +35,9 @@ void Synth::set_modulator_freq(float freq) {
 
 void Synth::trigger_note(int note)
 {
-  voices.at(0).set_carrier_freq(midi_to_freq(note) * detune);
+  /* todo: push new voice to vector */
+  float note_freq = midi_to_freq(note) * detune;
+  voices.at(0).set_carrier_freq(note_freq);
   voices.at(0).trigger();
 }
 

@@ -89,7 +89,7 @@ int main(int argc, char* args[])
   first.assign_control([&](float freq){synth.set_detune_freq(freq);}, 
       0, 8);
   second.assign_control([&](float freq){synth.set_modulator_freq(freq);}, 
-      0, 4000);
+      0, 1000);
   third.assign_control([&](float freq){synth.set_attack(freq);}, 
       0, 6000);
   forth.assign_control([&](float freq){synth.set_release(freq);}, 
@@ -126,6 +126,10 @@ int main(int argc, char* args[])
       }
       if(events.type == SDL_TEXTINPUT || events.type == SDL_KEYUP)
         keyboard.handle_keys(events);
+      if(events.type == SDL_MOUSEBUTTONDOWN)
+      {
+        printf("Clicky\n");
+      }
     }
 
     /* Update and render */

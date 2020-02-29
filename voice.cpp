@@ -20,8 +20,8 @@ Voice::Voice() {
 
 double Voice::tick() {
   float wave = AMPLITUDE * amplitude *
-    carrier.square(carrier_freq +
-        (modulator.sinewave(modulator_freq)*100)
+    carrier.sinewave(carrier_freq +
+        (modulator.square(modulator_freq)*100)
         );
   float envolope = env.adsr(1, note_on);
   /* for debug */
