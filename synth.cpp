@@ -37,10 +37,12 @@ void Synth::set_modulator_freq(float freq) {
 
 void Synth::trigger_note(int note)
 {
+  printf("Triggering note: %d\n", note);
   voices.at(0).trigger(note);
 }
 
 void Synth::trigger_note_off(int note){
+  printf("Detriggering note: %d\n", note);
   voices.at(0).trigger_off();
 }
 
