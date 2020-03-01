@@ -57,47 +57,6 @@ void Keyboard::handle_keys(SDL_Event e) {
     if(midi_note != 0) {
       keydown_callback(midi_note);
     }
-    //    switch(key) {
-    //      case 'a':
-    //        keydown_callback(36);
-    //        break;
-    //      case 'w':
-    //        keydown_callback(37);
-    //        break;
-    //      case 's':
-    //        keydown_callback(38);
-    //        break;
-    //      case 'e':
-    //        keydown_callback(39);
-    //        break;
-    //      case 'd':
-    //        keydown_callback(40);
-    //        break;
-    //      case 'f':
-    //        keydown_callback(41);
-    //        break;
-    //      case 't':
-    //        keydown_callback(42);
-    //        break;
-    //      case 'g':
-    //        keydown_callback(43);
-    //        break;
-    //      case 'y':
-    //        keydown_callback(44);
-    //        break;
-    //      case 'h':
-    //        keydown_callback(45);
-    //        break;
-    //      case 'u':
-    //        keydown_callback(46);
-    //        break;
-    //      case 'j':
-    //        keydown_callback(47);
-    //        break;
-    //
-    //      default:
-    //        break;
-    //    }
   }
   if(e.type == SDL_KEYUP) {
     if(midi_note != 0) {
