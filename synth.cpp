@@ -16,7 +16,7 @@ Synth::Synth() {
   settings.lfo_freq = 1;
   settings.adsr.attack = 50;
   settings.adsr.release = 300;
-
+  voices.at(0).set_settings(&settings);
 }
 
 double Synth::tick() {
@@ -26,29 +26,22 @@ double Synth::tick() {
   return filter.lopass(wave, lfo_freq_calc);
 }
 
-void Synth::set_carrier_freq(float freq) {
-  voices.at(0).set_carrier_freq(freq);
-}
-
+//void Synth::set_carrier_freq(float freq) {
+//  voices.at(0).set_carrier_freq(freq);
+//}
+//
 void Synth::set_modulator_freq(float freq) {
   settings.modulator_freq = freq;
-  voices.at(0).set_modulator_freq(settings.modulator_freq);
+  voices.at(0).set_modulator_freq();
 }
 
 void Synth::trigger_note(int note)
 {
-  /* todo: push new voice to vector */
-  float note_freq = midi_to_freq(note) * settings.detune_amt;
-  voices.at(0).set_carrier_freq(note_freq);
-  voices.at(0).trigger();
+  voices.at(0).trigger(note);
 }
 
 void Synth::trigger_note_off(int note){
   voices.at(0).trigger_off();
-}
-float Synth::midi_to_freq(int note) {
-  return pow(2, (note-69)/12.0)*440;
-
 }
 
 void Synth::set_detune_freq(float freq)
@@ -58,12 +51,12 @@ void Synth::set_detune_freq(float freq)
 
 void Synth::set_attack(float val) {
   settings.adsr.attack = val;
-  voices.at(0).set_attack(settings.adsr.attack);
+  voices.at(0).set_attack();
 }
 
 void Synth::set_release(float val){
   settings.adsr.release = val;
-  voices.at(0).set_release(settings.adsr.release);
+  voices.at(0).set_release();
 }
 
 void Synth::set_cutoff(float freq) {
@@ -72,9 +65,10 @@ void Synth::set_cutoff(float freq) {
 
 Voice* Synth::new_voice(int note, float detune, float modulator_f) {
   Voice* temp = new Voice;
-  temp->set_modulator_freq(settings.modulator_freq);
-  temp->set_attack(settings.adsr.attack);
-  temp->set_release(settings.adsr.release);
+  temp->set_settings(&settings);
+  temp->set_modulator_freq();
+  temp->set_attack();
+  temp->set_release();
   // set default note (move note conversion to voice)
   return temp;
 }

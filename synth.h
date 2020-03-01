@@ -8,7 +8,7 @@ class Synth {
   public:
     Synth();
     double tick();
-    void set_carrier_freq(float freq);
+    //void set_carrier_freq(float freq);
     void set_detune_freq(float freq);
     void set_modulator_freq(float freq);
 
@@ -23,7 +23,6 @@ class Synth {
     maxiOsc lfo;
     maxiFilter filter;
     float amplitude;
-    float midi_to_freq(int note);
     Voice* new_voice(int note, float detune, float modulator_f);
     std::vector<Voice> voices;
     struct Voice_settings settings;

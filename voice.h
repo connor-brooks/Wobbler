@@ -1,28 +1,26 @@
 #ifndef VOICE_H
 #define VOICE_H
 #include "libs/maximilian.h"
+#include "defs.h"
 
 class Voice {
   public:
     Voice();
     double tick();
     void set_carrier_freq(float freq);
-    void set_modulator_freq(float freq);
-    void trigger();
+    void set_modulator_freq();
+    void trigger(int _note);
     void trigger_off();
-    void set_attack(float val);
-    void set_release(float val);
+    void set_attack();
+    void set_release();
+    void set_settings(Voice_settings* ptr);
   private:
     int note_on;
     maxiOsc carrier, modulator;
     maxiEnv env;
     float carrier_freq;
-    float modulator_freq;
-    float amplitude;
-    struct {
-      float attack;
-      float release;
-    } adsr;
+    Voice_settings* settings;
+    float note_to_freq(int note);
 };
 
 #endif
