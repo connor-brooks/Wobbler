@@ -1,14 +1,14 @@
 #ifndef DEFS_H
 #define DEFS_H
 #include <SDL2/SDL.h>
-#include "synth.h"
-#include "gui_container.h"
 
 const int AMPLITUDE = 28000;
 const int SAMPLE_RATE = 44100;
 const int BUFFER = 2048;
 const int WIDTH = 680;
 const int HEIGHT = 480;
+class Synth;
+class GUI_Container;
 
 struct User_pointers {
   int* sample_num;
@@ -17,6 +17,18 @@ struct User_pointers {
   float* mouse_x, *mouse_y;
   SDL_Window* window;
   SDL_GLContext context;
+};
+
+struct Voice_settings {
+  float detune_amt;
+  float modulator_freq;
+  struct {
+    float attack;
+    float release;
+  } adsr;
+
+  float cutoff;
+  float lfo_freq;
 };
 
 #endif

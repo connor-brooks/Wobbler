@@ -2,6 +2,7 @@
 #define SYNTH_H
 #include "libs/maximilian.h"
 #include "voice.h"
+#include "defs.h"
 //http://subsynth.sourceforge.net/midinote2freq.html
 class Synth {
   public:
@@ -21,19 +22,11 @@ class Synth {
   private:
     maxiOsc lfo;
     maxiFilter filter;
-    float lfo_freq;
-    float cutoff;
-    float modulator_freq;
     float amplitude;
     float midi_to_freq(int note);
-    float detune;
     Voice* new_voice(int note, float detune, float modulator_f);
     std::vector<Voice> voices;
-    struct {
-      float attack;
-      float release;
-    } adsr;
-
+    struct Voice_settings settings;
 };
 
 #endif

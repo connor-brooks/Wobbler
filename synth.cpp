@@ -6,22 +6,23 @@
 #include "libs/maximilian.h"
 Synth::Synth() {
   std::cout << "init" << std::endl;
-  detune = 0;
-  modulator_freq = 1;
   amplitude = 1.0f;
   Voice main;
-  cutoff = 1;
   voices.push_back(main);
-  adsr.attack = 50;
-  adsr.release = 300;
-  lfo_freq = 1;
-  set_lfo_freq(lfo_freq);
+  set_lfo_freq(settings.lfo_freq);
+  settings.detune_amt = 1;
+  settings.modulator_freq = 100;
+  settings.cutoff = 1;
+  settings.lfo_freq = 1;
+  settings.adsr.attack = 50;
+  settings.adsr.release = 300;
+
 }
 
 double Synth::tick() {
   float wave = voices.at(0).tick();
   /* Calculate the filters cutoff value using LFO */
-  float lfo_freq_calc = cutoff * abs(lfo.sinewave(lfo_freq));
+  float lfo_freq_calc = settings.cutoff * abs(lfo.sinewave(settings.lfo_freq));
   return filter.lopass(wave, lfo_freq_calc);
 }
 
@@ -30,13 +31,14 @@ void Synth::set_carrier_freq(float freq) {
 }
 
 void Synth::set_modulator_freq(float freq) {
-  voices.at(0).set_modulator_freq(freq);
+  settings.modulator_freq = freq;
+  voices.at(0).set_modulator_freq(settings.modulator_freq);
 }
 
 void Synth::trigger_note(int note)
 {
   /* todo: push new voice to vector */
-  float note_freq = midi_to_freq(note) * detune;
+  float note_freq = midi_to_freq(note) * settings.detune_amt;
   voices.at(0).set_carrier_freq(note_freq);
   voices.at(0).trigger();
 }
@@ -48,31 +50,36 @@ float Synth::midi_to_freq(int note) {
   return pow(2, (note-69)/12.0)*440;
 
 }
+
 void Synth::set_detune_freq(float freq)
 {
-  detune = freq;
+  settings.detune_amt = freq;
 }
+
 void Synth::set_attack(float val) {
-  adsr.attack = val;
-  voices.at(0).set_attack(adsr.attack);
+  settings.adsr.attack = val;
+  voices.at(0).set_attack(settings.adsr.attack);
 }
+
 void Synth::set_release(float val){
-  adsr.release = val;
-  voices.at(0).set_release(adsr.release);
+  settings.adsr.release = val;
+  voices.at(0).set_release(settings.adsr.release);
 }
+
 void Synth::set_cutoff(float freq) {
-  cutoff = freq;
+  settings.cutoff = freq;
 }
 
 Voice* Synth::new_voice(int note, float detune, float modulator_f) {
   Voice* temp = new Voice;
-  temp->set_modulator_freq(modulator_freq);
-  temp->set_attack(adsr.attack);
-  temp->set_release(adsr.release);
+  temp->set_modulator_freq(settings.modulator_freq);
+  temp->set_attack(settings.adsr.attack);
+  temp->set_release(settings.adsr.release);
   // set default note (move note conversion to voice)
   return temp;
 }
 
 void Synth::set_lfo_freq(float freq) {
-lfo_freq = freq;
+  settings.lfo_freq = freq;
+//lfo_freq = freq;
 }
