@@ -10,6 +10,7 @@ Voice::Voice() {
   this->env.setDecay(1);
   this->env.setSustain(1);
   this->env.setRelease(300);
+  voice_status = VSTATE_PRETRIG;
 }
 
 double Voice::tick() {
@@ -18,10 +19,9 @@ double Voice::tick() {
         (modulator.square(settings->modulator_freq)*100)
         );
   float envolope = env.adsr(1, note_on);
-  /* for debug */
-  //  printf("wave %f\n", envP);
-  //  if(envP < 0.00001)
-  //    printf("Wave ended\n");
+  /* If env is dead, set status to dead, but only if the key is past being triggered and release (prevents ramp up values causing death  */
+    if(envolope < 0.0001 && voice_status == VSTATE_KEYUP)
+      voice_status = VSTATE_DEAD;
   return wave * envolope;
 }
 
@@ -35,12 +35,14 @@ void Voice::set_modulator_freq() {
 
 void Voice::trigger(int _note) {
   note_on = 1;
+  voice_status = VSTATE_KEYDOWN;
   float voice_freq = note_to_freq(_note) * settings->detune_amt;
   set_carrier_freq(voice_freq);
 }
 
 void Voice::trigger_off() {
   note_on = 0;
+  voice_status = VSTATE_KEYUP;
 }
 
 void Voice::set_attack() {
@@ -56,4 +58,8 @@ void Voice::set_settings(Voice_settings* ptr) {
 
 float Voice::note_to_freq(int note) {
   return pow(2, (note-69)/12.0)*440;
+}
+
+int Voice::get_status() {
+  return voice_status;
 }

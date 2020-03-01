@@ -31,4 +31,11 @@ struct Voice_settings {
   float lfo_freq;
 };
 
+enum Voice_state {
+  VSTATE_PRETRIG,
+  VSTATE_KEYDOWN,
+  VSTATE_KEYUP,
+  VSTATE_DEAD
+};
+
 #endif

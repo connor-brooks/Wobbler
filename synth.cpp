@@ -23,13 +23,19 @@ double Synth::tick() {
   float wave = voices.at(0).tick();
   /* Calculate the filters cutoff value using LFO */
   float lfo_freq_calc = settings.cutoff * abs(lfo.sinewave(settings.lfo_freq));
+
+/*  if(voices.at(0).get_status() == VSTATE_PRETRIG)
+    printf("pretrig voice \n");
+  else if(voices.at(0).get_status() == VSTATE_KEYDOWN)
+    printf("voice down \n");
+  else if(voices.at(0).get_status() == VSTATE_KEYUP)
+    printf("voice up \n");
+  else if(voices.at(0).get_status() == VSTATE_DEAD)
+    printf("voice dead \n"); */
+
   return filter.lopass(wave, lfo_freq_calc);
 }
 
-//void Synth::set_carrier_freq(float freq) {
-//  voices.at(0).set_carrier_freq(freq);
-//}
-//
 void Synth::set_modulator_freq(float freq) {
   settings.modulator_freq = freq;
   voices.at(0).set_modulator_freq();
