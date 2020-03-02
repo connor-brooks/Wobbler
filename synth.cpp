@@ -23,10 +23,12 @@ double Synth::tick() {
   int active_voices = 0;
   float lfo_freq_calc;
   float output;
+  int current_voice_status = -1;
   /* combine any active voices */
   for(int i = 0; i < voice_count; i++){
-    if((voices.at(i)->get_status() == VSTATE_KEYDOWN) ||
-        (voices.at(i)->get_status() == VSTATE_KEYUP)) {
+    current_voice_status = voices.at(i)->get_status();
+    if((current_voice_status == VSTATE_KEYDOWN) ||
+        (current_voice_status == VSTATE_KEYUP)) {
       wave += voices.at(i)->tick();
       active_voices++;
     }
