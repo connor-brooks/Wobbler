@@ -13,6 +13,7 @@
 #include "utils.h"
 #include "defs.h"
 #include "keyboard.h"
+#include "midi.h"
 
 void audio_callback(void *user_data, Uint8 *raw_buffer, int bytes)
 {
@@ -114,6 +115,11 @@ int main(int argc, char* args[])
   gui_container.add(&fifth);
   gui_container.add(&sixth);
 
+  /*Setup midi */
+  Midi* midi = new Midi();
+  midi->set_keydown_callback([&](int num) {synth.trigger_note(num);});
+  midi->set_keyup_callback([&](int num) {synth.trigger_note_off(num);});
+
   /* main loop */
   while(!should_quit)
   {
@@ -131,6 +137,9 @@ int main(int argc, char* args[])
         printf("Clicky\n");
       }
     }
+    /* midi stuff */
+    midi->get_messages();
+    midi->handle_messages();
 
     /* Update and render */
     update(&user_pointers);
