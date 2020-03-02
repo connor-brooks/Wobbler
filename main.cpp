@@ -105,6 +105,11 @@ int main(int argc, char* args[])
   keyboard.set_keydown_callback([&](int num) {synth.trigger_note(num);});
   keyboard.set_keyup_callback([&](int num) {synth.trigger_note_off(num);});
 
+  /*Setup midi */
+  Midi* midi = new Midi();
+  midi->set_keydown_callback([&](int num) {synth.trigger_note(num);});
+  midi->set_keyup_callback([&](int num) {synth.trigger_note_off(num);});
+
   /* setup gui */
   GUI_Container gui_container;
   user_pointers.gui_container = &gui_container;
@@ -115,10 +120,6 @@ int main(int argc, char* args[])
   gui_container.add(&fifth);
   gui_container.add(&sixth);
 
-  /*Setup midi */
-  Midi* midi = new Midi();
-  midi->set_keydown_callback([&](int num) {synth.trigger_note(num);});
-  midi->set_keyup_callback([&](int num) {synth.trigger_note_off(num);});
 
   /* main loop */
   while(!should_quit)
