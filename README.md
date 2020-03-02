@@ -20,5 +20,10 @@ Wobbler is a GUI for Mick Grierson's [Maximilian](https://github.com/micknoise/M
 ## What is Wobbler for?
 In short, it is to enable quick experimentation with synthesis parameters, in a way that mimics the experience of a hardware synth.
 
+## How to use Wobbler
+* Compile
+* Connect MIDI keyboard
+* Tweak the (unlabeled) parameters until you find a sound you like
+
 ## Screenshot
 ![](screenshot.png)
