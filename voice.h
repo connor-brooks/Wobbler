@@ -15,7 +15,9 @@ class Voice {
     void set_release();
     void set_settings(Voice_settings* ptr);
     int get_status();
+    int get_note_num();
   private:
+    int note_num;
     int note_on;
     maxiOsc carrier, modulator;
     maxiEnv env;

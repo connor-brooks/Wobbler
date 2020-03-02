@@ -11,7 +11,7 @@ void Keyboard::handle_keys(SDL_Event e) {
   char up_key = e.key.keysym.sym;
   char key = down_key == 0 ? up_key : down_key;
   int midi_note = 0;
-  printf("Key %c\n", key);
+  //printf("Key %c\n", key);
   switch(key) {
     case 'a':
       midi_note = 36;

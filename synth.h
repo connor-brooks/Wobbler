@@ -18,13 +18,14 @@ class Synth {
     void set_release(float val);
     void set_cutoff(float freq);
     void set_lfo_freq(float freq);
+    void prune_voices();
 
   private:
     maxiOsc lfo;
     maxiFilter filter;
     float amplitude;
-    Voice* new_voice(int note, float detune, float modulator_f);
-    std::vector<Voice> voices;
+    Voice* new_voice();
+    std::vector<Voice*> voices;
     struct Voice_settings settings;
 };
 

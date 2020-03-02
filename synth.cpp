@@ -7,8 +7,6 @@
 Synth::Synth() {
   std::cout << "init" << std::endl;
   amplitude = 1.0f;
-  Voice main;
-  voices.push_back(main);
   set_lfo_freq(settings.lfo_freq);
   settings.detune_amt = 1;
   settings.modulator_freq = 100;
@@ -16,40 +14,69 @@ Synth::Synth() {
   settings.lfo_freq = 1;
   settings.adsr.attack = 50;
   settings.adsr.release = 300;
-  voices.at(0).set_settings(&settings);
 }
 
 double Synth::tick() {
-  float wave = voices.at(0).tick();
-  /* Calculate the filters cutoff value using LFO */
-  float lfo_freq_calc = settings.cutoff * abs(lfo.sinewave(settings.lfo_freq));
+  prune_voices();
+  float wave = 0.0f;
+  int voice_count = voices.size();
+  int active_voices = 0;
+  float lfo_freq_calc;
+  float output;
+  /* combine any active voices */
+  for(int i = 0; i < voice_count; i++){
+    if((voices.at(i)->get_status() == VSTATE_KEYDOWN) ||
+        (voices.at(i)->get_status() == VSTATE_KEYUP)) {
+      wave += voices.at(i)->tick();
+      active_voices++;
+    }
+  }
+  /* scale the voice for 8 channels */
+  if(active_voices > 0)
+  wave = wave / 8;
+  
+  /* Calculate the filters cutoff value using LFO, use it to filter wave */
+  lfo_freq_calc = settings.cutoff * abs(lfo.sinewave(settings.lfo_freq));
+  output = filter.lopass(wave, lfo_freq_calc);
 
-/*  if(voices.at(0).get_status() == VSTATE_PRETRIG)
-    printf("pretrig voice \n");
-  else if(voices.at(0).get_status() == VSTATE_KEYDOWN)
-    printf("voice down \n");
-  else if(voices.at(0).get_status() == VSTATE_KEYUP)
-    printf("voice up \n");
-  else if(voices.at(0).get_status() == VSTATE_DEAD)
-    printf("voice dead \n"); */
-
-  return filter.lopass(wave, lfo_freq_calc);
+  /* If any erronious values meet the filter causing a NaN, restart it */
+  if(isnan(output)) {
+    printf("NAN ERROR at filter \n");
+    filter = maxiFilter();
+  }
+  return output;
 }
 
 void Synth::set_modulator_freq(float freq) {
   settings.modulator_freq = freq;
-  voices.at(0).set_modulator_freq();
+  int voice_count = voices.size();
+  for(int i = 0; i < voice_count; i++){
+    voices.at(i)->set_modulator_freq();
+  }
 }
 
 void Synth::trigger_note(int note)
 {
-  printf("Triggering note: %d\n", note);
-  voices.at(0).trigger(note);
+//  printf("Triggering note: %d\n", note);
+  int voice_count = voices.size();
+//  if(voice_count > 7) return;
+  for(int i = 0; i < voice_count; i++) {
+    if((voices.at(i)->get_note_num() == note) &&
+        (voices.at(i)->get_status() == VSTATE_KEYDOWN))
+      return;
+  }
+  Voice* temp = new_voice();
+  temp->trigger(note);
+  voices.push_back(temp);
 }
 
 void Synth::trigger_note_off(int note){
-  printf("Detriggering note: %d\n", note);
-  voices.at(0).trigger_off();
+ // printf("Detriggering note: %d\n", note);
+  int voice_count = voices.size();
+  for(int i = 0; i < voice_count; i++){
+    if(voices.at(i)->get_note_num() == note)
+      voices.at(i)->trigger_off();
+  }
 }
 
 void Synth::set_detune_freq(float freq)
@@ -59,19 +86,25 @@ void Synth::set_detune_freq(float freq)
 
 void Synth::set_attack(float val) {
   settings.adsr.attack = val;
-  voices.at(0).set_attack();
+  int voice_count = voices.size();
+  for(int i = 0; i < voice_count; i++){
+    voices.at(i)->set_attack();
+  }
 }
 
 void Synth::set_release(float val){
   settings.adsr.release = val;
-  voices.at(0).set_release();
+  int voice_count = voices.size();
+  for(int i = 0; i < voice_count; i++){
+    voices.at(i)->set_release();
+  }
 }
 
 void Synth::set_cutoff(float freq) {
   settings.cutoff = freq;
 }
 
-Voice* Synth::new_voice(int note, float detune, float modulator_f) {
+Voice* Synth::new_voice() {
   Voice* temp = new Voice;
   temp->set_settings(&settings);
   temp->set_modulator_freq();
@@ -83,5 +116,16 @@ Voice* Synth::new_voice(int note, float detune, float modulator_f) {
 
 void Synth::set_lfo_freq(float freq) {
   settings.lfo_freq = freq;
-//lfo_freq = freq;
+  //lfo_freq = freq;
+}
+void Synth::prune_voices() {
+  int voice_count = voices.size();
+  for(int i = 0; i < voice_count; i++){
+    if(voices.at(i)->get_status() == VSTATE_DEAD){
+      delete voices.at(i);
+      voices.erase(voices.begin() + i);
+      return;
+    }
+  }
+
 }
