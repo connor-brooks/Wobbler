@@ -89,8 +89,8 @@ int main(int argc, char* args[])
   Control first, second, third, forth, fifth, sixth;
   first.assign_control([&](float freq){synth.set_detune_freq(freq);}, 
       0, 8);
-  second.assign_control([&](float freq){synth.set_modulator_freq(freq);}, 
-      0, 1000);
+  second.assign_control([&](float ratio){synth.set_modulator_ratio(ratio);}, 
+      0, 8);
   third.assign_control([&](float freq){synth.set_attack(freq);}, 
       0, 6000);
   forth.assign_control([&](float freq){synth.set_release(freq);}, 

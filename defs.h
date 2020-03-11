@@ -21,7 +21,7 @@ struct User_pointers {
 
 struct Voice_settings {
   float detune_amt;
-  float modulator_freq;
+  float modulator_ratio;
   struct {
     float attack;
     float release;

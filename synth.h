@@ -10,7 +10,7 @@ class Synth {
     double tick();
     //void set_carrier_freq(float freq);
     void set_detune_freq(float freq);
-    void set_modulator_freq(float freq);
+    void set_modulator_ratio(float ratio);
 
     void trigger_note(int note);
     void trigger_note_off(int note);

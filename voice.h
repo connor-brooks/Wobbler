@@ -8,7 +8,7 @@ class Voice {
     Voice();
     double tick();
     void set_carrier_freq(float freq);
-    void set_modulator_freq();
+    void set_modulator_ratio();
     void trigger(int _note);
     void trigger_off();
     void set_attack();

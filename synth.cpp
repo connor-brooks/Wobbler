@@ -9,7 +9,7 @@ Synth::Synth() {
   amplitude = 1.0f;
   set_lfo_freq(settings.lfo_freq);
   settings.detune_amt = 1;
-  settings.modulator_freq = 100;
+  settings.modulator_ratio = 2;
   settings.cutoff = 1;
   settings.lfo_freq = 1;
   settings.adsr.attack = 50;
@@ -49,11 +49,11 @@ double Synth::tick() {
   return output;
 }
 
-void Synth::set_modulator_freq(float freq) {
-  settings.modulator_freq = freq;
+void Synth::set_modulator_ratio(float ratio) {
+  settings.modulator_ratio = ratio;
   int voice_count = voices.size();
   for(int i = 0; i < voice_count; i++){
-    voices.at(i)->set_modulator_freq();
+    voices.at(i)->set_modulator_ratio();
   }
 }
 
@@ -109,7 +109,7 @@ void Synth::set_cutoff(float freq) {
 Voice* Synth::new_voice() {
   Voice* temp = new Voice;
   temp->set_settings(&settings);
-  temp->set_modulator_freq();
+  temp->set_modulator_ratio();
   temp->set_attack();
   temp->set_release();
   // set default note (move note conversion to voice)

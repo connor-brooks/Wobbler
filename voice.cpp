@@ -5,7 +5,7 @@
 Voice::Voice() {
   std::cout << "init" << std::endl;
   carrier_freq = 440;
-  note_on = 0;
+  note_on = 1;
   this->env.setAttack(30);
   this->env.setDecay(1);
   this->env.setSustain(1);
@@ -19,7 +19,7 @@ double Voice::tick() {
   bool errors = false;
   float wave = AMPLITUDE *
     carrier.sinewave(carrier_freq +
-        (modulator.square(settings->modulator_freq)*100)
+        (modulator.square(carrier_freq * settings->modulator_ratio)*100)
         );
   float envolope = env.adsr(1, note_on);
   /* If env is dead, set status to dead, but only if the key is past being triggered and release (prevents ramp up values causing death  */
@@ -57,7 +57,7 @@ void Voice::set_carrier_freq(float freq) {
   carrier_freq = freq;
 }
 
-void Voice::set_modulator_freq() {
+void Voice::set_modulator_ratio() {
   // Do nothing, mod freq grabbed in tick()
 }
 
