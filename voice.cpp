@@ -17,10 +17,9 @@ Voice::Voice() {
 double Voice::tick() {
   float output = 0;
   bool errors = false;
-  float wave = AMPLITUDE *
-    carrier.sinewave(carrier_freq +
-        (modulator.square(carrier_freq * settings->modulator_ratio)*100)
-        );
+  float modulator_freq = carrier_freq * settings->modulator_ratio;
+  float modulator_wave = modulator.square(modulator_freq) * 100;
+  float wave = AMPLITUDE * carrier.sinewave(carrier_freq + modulator_wave);
   float envolope = env.adsr(1, note_on);
   /* If env is dead, set status to dead, but only if the key is past being triggered and release (prevents ramp up values causing death  */
     if(envolope < 0.0001 && voice_status == VSTATE_KEYUP)
