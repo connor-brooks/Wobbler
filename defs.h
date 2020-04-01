@@ -38,4 +38,11 @@ enum Voice_state {
   VSTATE_DEAD
 };
 
+enum Wave_type {
+  WAVE_SINE,
+  WAVE_SQUARE,
+  WAVE_TRI,
+  WAVE_SAW
+};
+
 #endif
