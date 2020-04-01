@@ -20,6 +20,8 @@ struct User_pointers {
 };
 
 struct Voice_settings {
+  int carrier_wave;
+  int mod_wave;
   float detune_amt;
   float modulator_ratio;
   struct {

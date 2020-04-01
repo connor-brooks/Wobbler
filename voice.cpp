@@ -15,19 +15,48 @@ Voice::Voice() {
 }
 
 double Voice::tick() {
-  float output = 0;
+  float output = 0.0f;
   bool errors = false;
   float modulator_freq = carrier_freq * settings->modulator_ratio;
-  float modulator_wave = modulator.square(modulator_freq) * 100;
-  float wave = AMPLITUDE * carrier.sinewave(carrier_freq + modulator_wave);
-  float envolope = env.adsr(1, note_on);
+  //float modulator_wave = modulator.square(modulator_freq) * 100;
+  float modulator_wave = 0.0f;
+  float wave = 0.0f;
+  float envolope;
+
+  /* Maybe move to function pointer? */
+  switch(settings->mod_wave) {
+    case WAVE_SINE:
+      modulator_wave = modulator.sinewave(modulator_freq);
+      break;
+    case WAVE_SQUARE:
+      modulator_wave = modulator.square(modulator_freq);
+      break;
+    default:
+      break;
+  };
+  modulator_wave *= 100;
+
+  //wave = carrier.sinewave(carrier_freq + modulator_wave);
+  switch(settings->carrier_wave) {
+    case WAVE_SINE:
+      wave = carrier.sinewave(carrier_freq + modulator_wave);
+      break;
+    case WAVE_SQUARE:
+      wave = carrier.square(carrier_freq + modulator_wave);
+      break;
+    default:
+      break;
+  };
+  wave *= AMPLITUDE;
+
+  envolope = env.adsr(1, note_on);
   /* If env is dead, set status to dead, but only if the key is past being triggered and release (prevents ramp up values causing death  */
-    if(envolope < 0.0001 && voice_status == VSTATE_KEYUP)
-      voice_status = VSTATE_DEAD;
+  if(envolope < 0.0001 && voice_status == VSTATE_KEYUP)
+    voice_status = VSTATE_DEAD;
 
   output = wave * envolope;
 
-  /* Catch any voice errors before the propagate up to the synth's main filter */
+  /* Catch any voice errors before the propagate up to the synth's main filter. After a lot of investigation it turns out occasionally Maximilian splits out a NaN as a value for a voice or envelope. There isn't much I can do about this right now, other than to drop any voice that does this to prevent further issues..*/
   if(isinf(envolope)) {
     printf("INF error at voice env\n");
     envolope = 0.0f;

@@ -8,6 +8,8 @@ Synth::Synth() {
   std::cout << "init" << std::endl;
   amplitude = 1.0f;
   set_lfo_freq(settings.lfo_freq);
+  settings.carrier_wave = WAVE_SINE;
+  settings.mod_wave = WAVE_SINE;
   settings.detune_amt = 1;
   settings.modulator_ratio = 2;
   settings.cutoff = 1;
