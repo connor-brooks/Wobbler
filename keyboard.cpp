@@ -4,6 +4,7 @@ Keyboard::Keyboard()
 {
   keydown_callback = NULL;
   keyup_callback = NULL;
+  octave = 0;
 }
 
 void Keyboard::handle_keys(SDL_Event e) {
@@ -49,18 +50,24 @@ void Keyboard::handle_keys(SDL_Event e) {
     case 'j':
       midi_note = 47;
       break;
+    case 'z':
+      octave--;
+      break;
+    case 'x':
+      octave++;
+      break;
 
     default:
       break;
   }
   if(e.type == SDL_TEXTINPUT) {
     if(midi_note != 0) {
-      keydown_callback(midi_note);
+      keydown_callback(midi_note + octave);
     }
   }
   if(e.type == SDL_KEYUP) {
     if(midi_note != 0) {
-      keyup_callback(midi_note);
+      keyup_callback(midi_note + octave);
     }
   }
 }
