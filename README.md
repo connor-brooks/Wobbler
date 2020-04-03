@@ -4,11 +4,13 @@
 Wobbler is a software synth. At the moment, don't bother downloading it, as it's in a heavy state of development.
 
 Some of the features that are currently implemented: 
+* User selectable waveforms (sine, square, sawtooth, triangle)
+* Detune
 * FM synthesis
+* ADSR (Well, attack and release)
 * Low pass filter
 * LFO for lowpass filter cutoff
 * MIDI note input
-* ADSR (Well, attack and release)
 
 Wobbler is a GUI for Mick Grierson's [Maximilian](https://github.com/micknoise/Maximilian), a C++ DSP and synthesis library. However, due to some bugs in Maximilian's library, synthesis functions will be rewritten from scratch for wobbler (at some point).
 
