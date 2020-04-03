@@ -27,6 +27,12 @@ In short, it is to enable quick experimentation with synthesis parameters, in a 
 * Connect MIDI keyboard
 * Tweak the (unlabeled) parameters until you find a sound you like
 
+# Controls
+Currently the controls aren't labeled, however, here is a reference:
+
+| Carrier waveform | Carrier detune | Modulator waveform | Carrier/modulator ratio | Attack time | Release time | Cutoff frequency | LFO rate |
+|------------------|----------------|--------------------|-------------------------|-------------|--------------|------------------|----------|
+
 ## Screenshot
 ![](screenshot.png)
 
