@@ -29,3 +29,6 @@ In short, it is to enable quick experimentation with synthesis parameters, in a 
 
 ## Screenshot
 ![](screenshot.png)
+
+## Notes
+* Sometimes notes will randomly be dropped, especially when notes are played very fast. This is due to a bug in Maximilian's envelope function. Currently there is little that can be done about this, however, eventually Maximilian's synthesis functions will be replaced by custom Wobbler specific functions, remedying this issue.
