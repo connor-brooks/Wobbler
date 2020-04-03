@@ -33,6 +33,9 @@ Currently the controls aren't labeled, however, here is a reference:
 | Carrier waveform | Carrier detune | Modulator waveform | Carrier/modulator ratio | Attack time | Release time | Cutoff frequency | LFO rate |
 |------------------|----------------|--------------------|-------------------------|-------------|--------------|------------------|----------|
 
+If you don't have a MIDI keyboard, you can use your computer's keyboard to play notes and change octave:
+![](keyboard.png)
+
 ## Screenshot
 ![](screenshot.png)
 
