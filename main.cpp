@@ -54,16 +54,15 @@ void quit(User_pointers* user_ptrs)
 
 void update(User_pointers* user_ptrs) {
 
-    float* mouse_x = user_ptrs->mouse_x;
-    float* mouse_y = user_ptrs->mouse_y;
-    GUI_Container* gui_container = user_ptrs->gui_container;
-    to_gl_coords(mouse_x, mouse_y, WIDTH, HEIGHT);
-    gui_container->intersect(*mouse_x, *mouse_y);
+  float* mouse_x = user_ptrs->mouse_x;
+  float* mouse_y = user_ptrs->mouse_y;
+  GUI_Container* gui_container = user_ptrs->gui_container;
+  to_gl_coords(mouse_x, mouse_y, WIDTH, HEIGHT);
+  gui_container->intersect(*mouse_x, *mouse_y);
 }
 
 int main(int argc, char* args[])
 {
-
   bool should_quit = false;
 
   /* create needed struct */
@@ -86,19 +85,41 @@ int main(int argc, char* args[])
   to_gl_coords(&mouse_x, &mouse_y, WIDTH, HEIGHT);
 
   /* Assign button control */
-  Control first, second, third, forth, fifth, sixth;
-  first.assign_control([&](float freq){synth.set_detune_freq(freq);}, 
-      0, 8);
-  second.assign_control([&](float ratio){synth.set_modulator_ratio(ratio);}, 
-      0, 8);
-  third.assign_control([&](float freq){synth.set_attack(freq);}, 
-      0, 6000);
-  forth.assign_control([&](float freq){synth.set_release(freq);}, 
-      0, 6000);
-  fifth.assign_control([&](float freq){synth.set_cutoff(freq);}, 
-      0, 1);
-  sixth.assign_control([&](float freq){synth.set_lfo_freq(freq);}, 
-      0, 20);
+  Control carrier_wave_control, detune_control, mod_wave_control,
+          mod_ratio_control, attack_control, release_control, cutoff_control,
+          lfo_control;
+
+  carrier_wave_control.assign_control([&](float val){
+      synth.set_carrier_wave(val);
+      }, 0, 4);
+
+  detune_control.assign_control([&](float freq){
+      synth.set_detune_freq(freq);
+      }, 0, 8);
+
+  mod_wave_control.assign_control([&](float val){
+      synth.set_mod_wave(val);
+      }, 0, 4);
+
+  mod_ratio_control.assign_control([&](float ratio){
+      synth.set_modulator_ratio(ratio);
+      }, 0, 8);
+
+  attack_control.assign_control([&](float freq){
+      synth.set_attack(freq);
+      }, 0, 6000);
+
+  release_control.assign_control([&](float freq){
+      synth.set_release(freq);
+      }, 0, 6000);
+
+  cutoff_control.assign_control([&](float freq){
+      synth.set_cutoff(freq);
+      }, 0, 1);
+
+  lfo_control.assign_control([&](float freq){
+      synth.set_lfo_freq(freq);
+      }, 0, 20);
 
   /* Assign keyboard callbacks */
   Keyboard keyboard;
@@ -113,12 +134,14 @@ int main(int argc, char* args[])
   /* setup gui */
   GUI_Container gui_container;
   user_pointers.gui_container = &gui_container;
-  gui_container.add(&first);
-  gui_container.add(&second);
-  gui_container.add(&third);
-  gui_container.add(&forth);
-  gui_container.add(&fifth);
-  gui_container.add(&sixth);
+  gui_container.add(&carrier_wave_control);
+  gui_container.add(&detune_control);
+  gui_container.add(&mod_wave_control);
+  gui_container.add(&mod_ratio_control);
+  gui_container.add(&attack_control);
+  gui_container.add(&release_control);
+  gui_container.add(&cutoff_control);
+  gui_container.add(&lfo_control);
 
 
   /* main loop */

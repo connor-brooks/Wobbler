@@ -3,7 +3,6 @@
 #include "defs.h"
 #include "libs/maximilian.h"
 Voice::Voice() {
-  std::cout << "init" << std::endl;
   carrier_freq = 440;
   note_on = 1;
   this->env.setAttack(30);
@@ -18,12 +17,10 @@ double Voice::tick() {
   float output = 0.0f;
   bool errors = false;
   float modulator_freq = carrier_freq * settings->modulator_ratio;
-  //float modulator_wave = modulator.square(modulator_freq) * 100;
   float modulator_wave = 0.0f;
   float wave = 0.0f;
   float envolope;
 
-  /* Maybe move to function pointer? */
   switch(settings->mod_wave) {
     case WAVE_SINE:
       modulator_wave = modulator.sinewave(modulator_freq);
@@ -31,18 +28,29 @@ double Voice::tick() {
     case WAVE_SQUARE:
       modulator_wave = modulator.square(modulator_freq);
       break;
+    case WAVE_TRI:
+      modulator_wave = modulator.triangle(modulator_freq);
+      break;
+    case WAVE_SAW:
+      modulator_wave = modulator.saw(modulator_freq);
+      break;
     default:
       break;
   };
   modulator_wave *= 100;
 
-  //wave = carrier.sinewave(carrier_freq + modulator_wave);
   switch(settings->carrier_wave) {
     case WAVE_SINE:
       wave = carrier.sinewave(carrier_freq + modulator_wave);
       break;
     case WAVE_SQUARE:
       wave = carrier.square(carrier_freq + modulator_wave);
+      break;
+    case WAVE_TRI:
+      wave = carrier.triangle(carrier_freq + modulator_wave);
+      break;
+    case WAVE_SAW:
+      wave = carrier.saw(carrier_freq + modulator_wave);
       break;
     default:
       break;

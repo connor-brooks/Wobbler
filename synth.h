@@ -18,6 +18,8 @@ class Synth {
     void set_release(float val);
     void set_cutoff(float freq);
     void set_lfo_freq(float freq);
+    void set_carrier_wave(float val);
+    void set_mod_wave(float val);
     void prune_voices();
 
   private:

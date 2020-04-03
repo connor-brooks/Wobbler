@@ -8,7 +8,7 @@ Synth::Synth() {
   std::cout << "init" << std::endl;
   amplitude = 1.0f;
   set_lfo_freq(settings.lfo_freq);
-  settings.carrier_wave = WAVE_SINE;
+  settings.carrier_wave = WAVE_SQUARE;
   settings.mod_wave = WAVE_SINE;
   settings.detune_amt = 1;
   settings.modulator_ratio = 2;
@@ -37,8 +37,8 @@ double Synth::tick() {
   }
   /* scale the voice for 8 channels */
   if(active_voices > 0)
-  wave = wave / 8;
-  
+    wave = wave / 8;
+
   /* Calculate the filters cutoff value using LFO, use it to filter wave */
   lfo_freq_calc = settings.cutoff * abs(lfo.sinewave(settings.lfo_freq));
   output = filter.lopass(wave, lfo_freq_calc);
@@ -61,13 +61,15 @@ void Synth::set_modulator_ratio(float ratio) {
 
 void Synth::trigger_note(int note)
 {
-//  printf("Triggering note: %d\n", note);
+  printf("Triggering note: %d\n", note);
   int voice_count = voices.size();
-//  if(voice_count > 7) return;
+  //  if(voice_count > 7) return;
   for(int i = 0; i < voice_count; i++) {
     if((voices.at(i)->get_note_num() == note) &&
-        (voices.at(i)->get_status() == VSTATE_KEYDOWN))
+        (voices.at(i)->get_status() == VSTATE_KEYDOWN)) {
+      printf("DUPLICATE NOTE, ignoring\n");
       return;
+    }
   }
   Voice* temp = new_voice();
   temp->trigger(note);
@@ -75,7 +77,7 @@ void Synth::trigger_note(int note)
 }
 
 void Synth::trigger_note_off(int note){
- // printf("Detriggering note: %d\n", note);
+  printf("Detriggering note: %d\n", note);
   int voice_count = voices.size();
   for(int i = 0; i < voice_count; i++){
     if(voices.at(i)->get_note_num() == note)
@@ -120,8 +122,16 @@ Voice* Synth::new_voice() {
 
 void Synth::set_lfo_freq(float freq) {
   settings.lfo_freq = freq;
-  //lfo_freq = freq;
 }
+
+void Synth::set_carrier_wave(float val) {
+  settings.carrier_wave = (int) val;
+}
+
+void Synth::set_mod_wave(float val) {
+  settings.mod_wave = (int) val;
+}
+
 void Synth::prune_voices() {
   int voice_count = voices.size();
   for(int i = 0; i < voice_count; i++){
