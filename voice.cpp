@@ -51,11 +51,11 @@ double Voice::tick() {
   wave = get_wave(&carrier, settings->carrier_wave, carrier_freq + modulator_wave);
   wave *= AMPLITUDE;
 
+  /* Use envolope on FM wave */
   envolope = env.adsr(1, note_on);
   /* If env is dead, set status to dead, but only if the key is past being triggered and release (prevents ramp up values causing death  */
   if(envolope < 0.0001 && voice_status == VSTATE_KEYUP)
     voice_status = VSTATE_DEAD;
-
   output = wave * envolope;
 
   /* Catch any voice errors before the propagate up to the synth's main filter. After a lot of investigation it turns out occasionally Maximilian splits out a NaN as a value for a voice or envelope. There isn't much I can do about this right now, other than to drop any voice that does this to prevent further issues..*/

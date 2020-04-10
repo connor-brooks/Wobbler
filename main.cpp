@@ -143,6 +143,8 @@ int main(int argc, char* args[])
   gui_container.add(&cutoff_control);
   gui_container.add(&lfo_control);
 
+  /* Randomize controls */
+  gui_container.randomize_controls();
 
   /* main loop */
   while(!should_quit)
@@ -161,6 +163,7 @@ int main(int argc, char* args[])
         printf("Clicky\n");
       }
     }
+
     /* midi stuff */
     midi->get_messages();
     midi->handle_messages();

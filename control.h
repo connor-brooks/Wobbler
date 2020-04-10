@@ -8,7 +8,6 @@ class Control {
   float max_height;
   float verts[4][2];
   void setVerts();
-  float amount;
   void update(float mouse_y);
   std::function<void (float)> to_control_funct;
   float to_control_min, to_control_max;
@@ -22,5 +21,7 @@ class Control {
   void draw();
   bool intersect(float x, float y);
   void assign_control(std::function<void (float)> func, float min, float max);
+
+  void set_amt(float amt);
 };
 #endif

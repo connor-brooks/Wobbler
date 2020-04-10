@@ -1,6 +1,7 @@
 #include <iostream>
 #include "gui_container.h"
 #include "control.h"
+#include "math.h"
 GUI_Container::GUI_Container() {
   printf("container init\n");
   x_pos = -0.9;
@@ -40,5 +41,16 @@ void GUI_Container::intersect(float x, float y) {
     return;
   for(int i = 0; i < control_count; i++) {
     controls.at(i)->intersect(x, y);
+  }
+}
+
+void GUI_Container::randomize_controls() {
+  int control_count = controls.size();
+  float rand_val;
+  if(control_count == 0)
+    return;
+  for(int i = 0; i < control_count; i++) {
+    rand_val = ((float) rand()) / (float) RAND_MAX;
+    controls.at(i)->set_amt(rand_val);
   }
 }

@@ -25,7 +25,6 @@ Control::Control()
   height = 1.6;
   max_height = 1.6;
   setVerts();
-  amount = 1.0f;
   to_control_funct = NULL;
   to_control_min = 0.0f;
   to_control_max = 1.0f;
@@ -68,23 +67,23 @@ void Control::draw()
 }
 
 bool Control::intersect(float x, float y) {
-  if(x >= verts[0][0] &&
-      x <=  verts[2][0])
-  {
+  if(x >= verts[0][0] && x <= verts[2][0])
     update(y);
-  }
   return true;
 }
 
-void Control::update(float mouse_y) {
-  amount = (mouse_y - yPos) / max_height;
-  if(!(amount > 1.0) && !(amount <0.0)){
-    height = max_height * amount;
+void Control::set_amt(float amt) {
+  if(!(amt > 1.0) && !(amt <0.0)){
+    height = max_height * amt;
     setVerts();
-    //printf("intersect\n");
     if(to_control_funct != NULL)
-    to_control_funct(amount * to_control_max);
+      to_control_funct(amt * to_control_max);
   }
+}
+
+void Control::update(float mouse_y) {
+  float amount = (mouse_y - yPos) / max_height;
+  set_amt(amount);
 }
 
 void Control::assign_control(std::function<void (float)> func, float min, float max)

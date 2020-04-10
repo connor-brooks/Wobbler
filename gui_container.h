@@ -14,5 +14,6 @@ class GUI_Container {
     void add(Control* item);
     void draw();
     void intersect(float x, float y);
+    void randomize_controls();
 };
 #endif
