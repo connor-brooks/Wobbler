@@ -221,6 +221,7 @@ int main(int argc, char* args[])
     update(&user_pointers);
     render(&user_pointers);
     SDL_GL_SwapWindow(user_pointers.window);
+    SDL_Delay(50);
   }
 
   console_thread.detach();

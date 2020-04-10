@@ -1,0 +1,13 @@
+cutoff 0.5
+detune 0.5
+attack 0.05
+release 0.1
+noteon 36
+noteoff 36
+noteon 40
+noteoff 40
+noteon 43
+noteoff 43
+noteon 43
+noteoff 43
+quit
