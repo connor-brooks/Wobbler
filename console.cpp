@@ -32,7 +32,8 @@ void Console::parse(std::string cmd) {
     argv->push_back(tmp);
   }
   argc = argv->size();
-  exec(argc, argv);
+  if (argc > 0)
+    exec(argc, argv);
 }
 
 void Console::add_command(std::string command_name, int arg_count, std::function <void (float)> callback) {
