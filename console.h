@@ -1,14 +1,23 @@
+#ifndef CONSOLE_H
+#define CONSOLE_H
 #include <iostream>
+#include <vector>
 #include "defs.h"
+#include "command.h"
+
+
 class Console {
   private:
-    std::function<void (float)> callbacks[2];
     bool *should_quit;
+    void parse(std::string cmd);
+    std::vector <Command*> commands;
+
   public:
-    void set_callback(int callback_num, std::function <void (float)> callback);
+    Console();
 
     void set_should_quit(bool *ptr);
     void operator()();
+    void add_command(std::string command_name, int arg_count, std::function <void (float)> callback);
 
 };
-
+#endif

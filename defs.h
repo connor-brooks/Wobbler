@@ -47,8 +47,4 @@ enum Wave_type {
   WAVE_SAW
 };
 
-enum CONSOLE_CALLBACKS {
-  CONS_CALLB_QUIT,
-  CONS_CALLB_DO_RAND
-};
 #endif

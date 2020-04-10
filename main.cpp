@@ -151,7 +151,10 @@ int main(int argc, char* args[])
   /* Setup console input/output */
   Console console;
   console.set_should_quit(&should_quit);
-  console.set_callback(CONS_CALLB_DO_RAND, [&](float val){ gui_container.randomize_controls();});
+
+  console.add_command("rand", 0, [&](float val) {
+      gui_container.randomize_controls();});
+
   std::thread console_thread(console);
 
 
