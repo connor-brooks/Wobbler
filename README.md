@@ -48,10 +48,21 @@ If you don't have a MIDI keyboard, you can use your computer's keyboard to play 
 ## Command line
 Additionally, the synth can be controlled via the command line, below is a list of commands:
 
-| Command name | Arguments | Description                |
-|--------------|-----------|----------------------------|
-| rand         | n/a       | Randomise synth parameters |
-| quit         | n/a       | Quit the program           |
+| Command name | Arguments | Description                                       |
+|--------------|-----------|---------------------------------------------------|
+| rand         | n/a       | Randomise synth parameters                        |
+| help         | n/a       | Display a list of commands                        |
+| quit         | n/a       | Quit the program                                  |
+| noteon       | midi note | Turn a note on                                    |
+| noteoff      | midi note | Turn a note off                                   |
+| car_wave     | 0.0 - 1.0 | Set the carrier wave                              |
+| detune       | 0.0 - 1.0 | Set the detune amount                             |
+| mod_wave     | 0.0 - 1.0 | Set the modulator wave                            |
+| mod_ratio    | 0.0 - 1.0 | Set the modulators ratio w.r.t. carrier frequency |
+| attack       | 0.0 - 1.0 | Set the attack time                               |
+| release      | 0.0 - 1.0 | Set the release time                              |
+| cutoff       | 0.0 - 1.0 | Set the cutoff                                    |
+| lfo          | 0.0 - 1.0 | Set the LFO speed                                 |
 
 ## Notes
 * Sometimes notes will randomly be dropped, especially when notes are played very fast. This is due to a bug in Maximilian's envelope function. Currently there is little that can be done about this, however, eventually Maximilian's synthesis functions will be replaced by custom Wobbler specific functions, remedying this issue.
