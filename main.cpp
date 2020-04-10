@@ -155,6 +155,9 @@ int main(int argc, char* args[])
   console.add_command("rand", 0, [&](float val) {
       gui_container.randomize_controls();});
 
+  console.add_command("quit", 0, [&](float val) {
+      should_quit = true;});
+
   std::thread console_thread(console);
 
 

@@ -18,6 +18,7 @@ class Console {
     void set_should_quit(bool *ptr);
     void operator()();
     void add_command(std::string command_name, int arg_count, std::function <void (float)> callback);
+    void exec(int argc, std::vector<std::string> *argv);
 
 };
 #endif
