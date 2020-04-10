@@ -12,6 +12,7 @@ Console::Console() {
 void Console::operator()() {
   while(!*should_quit) {
     std::string cmd;
+    std::cout << "Wobbler> ";
     getline(std::cin, cmd);
     parse(cmd);
   }
@@ -63,4 +64,14 @@ void Console::exec(int argc, std::vector<std::string> *argv) {
   }
 
   delete argv;
+}
+void Console::print_help() {
+  int command_count = commands.size();
+  for(int i = 0; i < command_count; i++) {
+    std::cout << commands.at(i)->get_name() << " ";
+    if(commands.at(i)->get_argc() > 0)
+      std::cout << "[arg]";
+    std::cout << std::endl;
+  }
+
 }

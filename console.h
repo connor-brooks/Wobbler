@@ -19,6 +19,7 @@ class Console {
     void operator()();
     void add_command(std::string command_name, int arg_count, std::function <void (float)> callback);
     void exec(int argc, std::vector<std::string> *argv);
+    void print_help();
 
 };
 #endif

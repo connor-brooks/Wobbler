@@ -158,14 +158,39 @@ int main(int argc, char* args[])
   console.add_command("quit", 0, [&](float val) {
       should_quit = true;});
 
-  console.add_command("detune", 1, [&](float val) {
-      detune_control.set_amt(val);});
+  console.add_command("help", 0, [&](float val) {
+      console.print_help();});
 
   console.add_command("noteon", 1, [&](float val) {
       synth.trigger_note((int)val);});
 
   console.add_command("noteoff", 1, [&](float val) {
       synth.trigger_note_off((int)val);});
+
+  console.add_command("car_wave", 1, [&](float val) {
+      synth.set_carrier_wave(val);});
+
+  console.add_command("detune", 1, [&](float val) {
+      detune_control.set_amt(val);});
+
+  console.add_command("mod_wave", 1, [&](float val) {
+      synth.set_mod_wave(val);});
+
+  console.add_command("mod_ratio", 1, [&](float val) {
+      synth.set_modulator_ratio(val);});
+
+  console.add_command("attack", 1, [&](float val) {
+      synth.set_attack(val);});
+
+  console.add_command("release", 1, [&](float val) {
+      synth.set_release(val);});
+
+  console.add_command("cutoff", 1, [&](float val) {
+      synth.set_cutoff(val);});
+
+  console.add_command("lfo", 1, [&](float val) {
+      synth.set_lfo_freq(val);});
+
 
   std::thread console_thread(console);
 
