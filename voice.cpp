@@ -13,6 +13,27 @@ Voice::Voice() {
   note_num = 0;
 }
 
+float Voice::get_wave(maxiOsc *osc, int wavetype, float freq) {
+  float output = 0.0f;
+  switch(wavetype) {
+    case WAVE_SINE:
+      output = osc->sinewave(freq);
+      break;
+    case WAVE_SQUARE:
+      output = osc->square(freq);
+      break;
+    case WAVE_TRI:
+      output = osc->triangle(freq);
+      break;
+    case WAVE_SAW:
+      output = osc->saw(freq);
+      break;
+    default:
+      break;
+  };
+  return output;
+}
+
 double Voice::tick() {
   float output = 0.0f;
   bool errors = false;
@@ -21,40 +42,13 @@ double Voice::tick() {
   float wave = 0.0f;
   float envolope;
 
-  switch(settings->mod_wave) {
-    case WAVE_SINE:
-      modulator_wave = modulator.sinewave(modulator_freq);
-      break;
-    case WAVE_SQUARE:
-      modulator_wave = modulator.square(modulator_freq);
-      break;
-    case WAVE_TRI:
-      modulator_wave = modulator.triangle(modulator_freq);
-      break;
-    case WAVE_SAW:
-      modulator_wave = modulator.saw(modulator_freq);
-      break;
-    default:
-      break;
-  };
+  /* Create modulator wave, scale it by 100 to use for FM */
+  modulator_wave = get_wave(&modulator, settings->mod_wave, modulator_freq);
   modulator_wave *= 100;
 
-  switch(settings->carrier_wave) {
-    case WAVE_SINE:
-      wave = carrier.sinewave(carrier_freq + modulator_wave);
-      break;
-    case WAVE_SQUARE:
-      wave = carrier.square(carrier_freq + modulator_wave);
-      break;
-    case WAVE_TRI:
-      wave = carrier.triangle(carrier_freq + modulator_wave);
-      break;
-    case WAVE_SAW:
-      wave = carrier.saw(carrier_freq + modulator_wave);
-      break;
-    default:
-      break;
-  };
+  /* Create carrier wave, scale it by global amplitude settings to
+   * be written to buffer */
+  wave = get_wave(&carrier, settings->carrier_wave, carrier_freq + modulator_wave);
   wave *= AMPLITUDE;
 
   envolope = env.adsr(1, note_on);

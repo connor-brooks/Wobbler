@@ -25,6 +25,7 @@ class Voice {
     Voice_settings* settings;
     float note_to_freq(int note);
     int voice_status;
+    float get_wave(maxiOsc *osc, int wavetype, float freq);
 };
 
 #endif
