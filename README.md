@@ -28,6 +28,11 @@ In short, it is to enable quick experimentation with synthesis parameters, in a 
 * Tweak the (unlabeled) parameters until you find a sound you like
 
 # Controls
+
+## MIDI
+Notes can be played by connecting a MIDI keyboard to your computer before starting Wobbler, changing synth parameters via CC will be added soon.
+
+## GUI
 Currently the GUI controls aren't labeled, however, here is a reference:
 
 ![](screenshot.png)
@@ -35,9 +40,12 @@ Currently the GUI controls aren't labeled, however, here is a reference:
 | Carrier waveform | Carrier detune | Modulator waveform | Carrier/modulator ratio | Attack time | Release time | Cutoff frequency | LFO rate |
 |------------------|----------------|--------------------|-------------------------|-------------|--------------|------------------|----------|
 
+
+## Computer Keyboard
 If you don't have a MIDI keyboard, you can use your computer's keyboard to play notes and change octave:
 ![](keyboard.png)
 
+## Command line
 Additionally, the synth can be controlled via the command line, below is a list of commands:
 
 | Command name | Arguments | Description                |
