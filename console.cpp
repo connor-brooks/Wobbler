@@ -12,7 +12,7 @@ Console::Console() {
 void Console::operator()() {
   while(!*should_quit) {
     std::string cmd;
-    std::cin >> cmd;
+    getline(std::cin, cmd);
     parse(cmd);
   }
 }
@@ -26,6 +26,7 @@ void Console::parse(std::string cmd) {
   std::stringstream stream(cmd);
   std::vector<std::string> *argv = new std::vector<std::string>;
   int argc;
+  /* Split to vector */
   while(getline(stream, tmp, ' ')){
     argv->push_back(tmp);
   }
@@ -41,10 +42,25 @@ void Console::add_command(std::string command_name, int arg_count, std::function
 void Console::exec(int argc, std::vector<std::string> *argv) {
   int command_count = commands.size();
   std::string test = commands.at(0)->get_name();
+  bool found = false;
+
+  /* For now, we only need one arg for all commands*/
+  float arg = (argc > 1)? stof(argv->at(1)) :  0.0f;
+
   for(int i = 0; i < command_count; i++) {
     if(commands.at(i)->get_name().compare(argv->at(0)) == 0){
-      commands.at(i)->exec(0);
+      {
+        found = true;
+        if(commands.at(i)->get_argc() > argc - 1)
+          std::cout << "Error, not enough arguments" << std::endl;
+        else
+          commands.at(i)->exec(arg);
+      }
     }
   }
+  if (!found) {
+    std::cout << "Error: \"" << argv->at(0) <<"\" not found." << std::endl;
+  }
+
   delete argv;
 }

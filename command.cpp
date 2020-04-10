@@ -13,3 +13,7 @@ void Command::exec(float val) {
 std::string Command::get_name() {
   return command_name;
 }
+
+int Command::get_argc() {
+  return arg_count;
+}

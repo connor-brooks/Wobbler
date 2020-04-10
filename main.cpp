@@ -158,6 +158,15 @@ int main(int argc, char* args[])
   console.add_command("quit", 0, [&](float val) {
       should_quit = true;});
 
+  console.add_command("detune", 1, [&](float val) {
+      detune_control.set_amt(val);});
+
+  console.add_command("noteon", 1, [&](float val) {
+      synth.trigger_note((int)val);});
+
+  console.add_command("noteoff", 1, [&](float val) {
+      synth.trigger_note_off((int)val);});
+
   std::thread console_thread(console);
 
 

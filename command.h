@@ -11,5 +11,6 @@ class Command {
     Command(std::string cmd_name, int argc, std::function<void (float)> callb);
     void exec(float val);
     std::string get_name();
+    int get_argc();
 };
 #endif
