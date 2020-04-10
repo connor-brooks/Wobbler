@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_audio.h>
@@ -14,6 +15,7 @@
 #include "defs.h"
 #include "keyboard.h"
 #include "midi.h"
+#include "console.h"
 
 void audio_callback(void *user_data, Uint8 *raw_buffer, int bytes)
 {
@@ -146,6 +148,13 @@ int main(int argc, char* args[])
   /* Randomize controls */
   gui_container.randomize_controls();
 
+  /* Setup console input/output */
+  Console console;
+  console.set_should_quit(&should_quit);
+  console.set_callback(CONS_CALLB_DO_RAND, [&](float val){ gui_container.randomize_controls();});
+  std::thread console_thread(console);
+
+
   /* main loop */
   while(!should_quit)
   {
@@ -174,6 +183,7 @@ int main(int argc, char* args[])
     SDL_GL_SwapWindow(user_pointers.window);
   }
 
+  console_thread.detach();
   quit(&user_pointers);
   return 0;
 }
