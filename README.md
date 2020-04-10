@@ -28,7 +28,7 @@ In short, it is to enable quick experimentation with synthesis parameters, in a 
 * Tweak the (unlabeled) parameters until you find a sound you like
 
 # Controls
-Currently the controls aren't labeled, however, here is a reference:
+Currently the GUI controls aren't labeled, however, here is a reference:
 
 ![](screenshot.png)
 
@@ -37,6 +37,13 @@ Currently the controls aren't labeled, however, here is a reference:
 
 If you don't have a MIDI keyboard, you can use your computer's keyboard to play notes and change octave:
 ![](keyboard.png)
+
+Additionally, the synth can be controlled via the command line, below is a list of commands:
+
+| Command name | Arguments | Description                |
+|--------------|-----------|----------------------------|
+| rand         | n/a       | Randomise synth parameters |
+| quit         | n/a       | Quit the program           |
 
 ## Notes
 * Sometimes notes will randomly be dropped, especially when notes are played very fast. This is due to a bug in Maximilian's envelope function. Currently there is little that can be done about this, however, eventually Maximilian's synthesis functions will be replaced by custom Wobbler specific functions, remedying this issue.
