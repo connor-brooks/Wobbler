@@ -168,28 +168,28 @@ int main(int argc, char* args[])
       synth.trigger_note_off((int)val);});
 
   console.add_command("car_wave", 1, [&](float val) {
-      synth.set_carrier_wave(val);});
+      carrier_wave_control.set_amt(val);});
 
   console.add_command("detune", 1, [&](float val) {
       detune_control.set_amt(val);});
 
   console.add_command("mod_wave", 1, [&](float val) {
-      synth.set_mod_wave(val);});
+      mod_wave_control.set_amt(val);});
 
   console.add_command("mod_ratio", 1, [&](float val) {
-      synth.set_modulator_ratio(val);});
+      mod_ratio_control.set_amt(val);});
 
   console.add_command("attack", 1, [&](float val) {
-      synth.set_attack(val);});
+      attack_control.set_amt(val);});
 
   console.add_command("release", 1, [&](float val) {
-      synth.set_release(val);});
+      release_control.set_amt(val);});
 
   console.add_command("cutoff", 1, [&](float val) {
-      synth.set_cutoff(val);});
+      cutoff_control.set_amt(val);});
 
   console.add_command("lfo", 1, [&](float val) {
-      synth.set_lfo_freq(val);});
+      lfo_control.set_amt(val);});
 
 
   std::thread console_thread(console);
