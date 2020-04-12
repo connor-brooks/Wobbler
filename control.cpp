@@ -18,7 +18,7 @@ void Control::setVerts() {
 }
 Control::Control()
 {
-  printf("Control init\n");
+  //printf("Control init\n");
   xPos = -0.9;
   yPos = -0.9;
   width = 0.13;

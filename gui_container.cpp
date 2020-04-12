@@ -3,7 +3,7 @@
 #include "control.h"
 #include "math.h"
 GUI_Container::GUI_Container() {
-  printf("container init\n");
+  //printf("container init\n");
   x_pos = -0.9;
   y_pos = -0.9;
   padding = 0.1;
