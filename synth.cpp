@@ -5,7 +5,6 @@
 #include "defs.h"
 #include "libs/maximilian.h"
 Synth::Synth() {
-  std::cout << "init" << std::endl;
   amplitude = 1.0f;
   set_lfo_freq(settings.lfo_freq);
   settings.carrier_wave = WAVE_SQUARE;
