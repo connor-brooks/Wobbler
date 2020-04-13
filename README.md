@@ -11,6 +11,7 @@ Some of the features that are currently implemented:
 * Low pass filter
 * LFO for lowpass filter cutoff
 * MIDI note input
+* Command line parameter and note control
 
 Wobbler is a GUI for Mick Grierson's [Maximilian](https://github.com/micknoise/Maximilian), a C++ DSP and synthesis library. However, due to some bugs in Maximilian's library, synthesis functions will be rewritten from scratch for wobbler (at some point).
 
