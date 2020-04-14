@@ -97,6 +97,10 @@ void Voice::trigger(int _note) {
   voice_status = VSTATE_KEYDOWN;
   float voice_freq = note_to_freq(note_num) * settings->detune_amt;
   set_carrier_freq(voice_freq);
+  /* an attempt to mitigate Maximilian's strange envelope bug, this
+   * actually does nothing but jump-start the env to try prevent 
+   * -INF values being returned and killing the voice*/
+  env.adsr(1, note_on);
 }
 
 void Voice::trigger_off() {
