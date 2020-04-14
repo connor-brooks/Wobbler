@@ -140,5 +140,4 @@ void Synth::prune_voices() {
       return;
     }
   }
-
 }

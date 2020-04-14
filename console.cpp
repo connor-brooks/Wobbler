@@ -27,6 +27,7 @@ void Console::parse(std::string cmd) {
   std::stringstream stream(cmd);
   std::vector<std::string> *argv = new std::vector<std::string>;
   int argc;
+
   /* Split to vector */
   while(getline(stream, tmp, ' ')){
     argv->push_back(tmp);
@@ -43,25 +44,30 @@ void Console::add_command(std::string command_name, int arg_count, std::function
 
 void Console::exec(int argc, std::vector<std::string> *argv) {
   int command_count = commands.size();
-  std::string test = commands.at(0)->get_name();
   bool found = false;
+  float arg;
+  Command* tmp_cmd;
+  std::string* input_cmd;
 
   /* For now, we only need one arg for all commands*/
-  float arg = (argc > 1)? stof(argv->at(1)) :  0.0f;
+  arg = (argc > 1)? stof(argv->at(1)) :  0.0f;
+  input_cmd = &argv->at(0);
 
+  /* check command exists, check right arg count, execute command */
   for(int i = 0; i < command_count; i++) {
-    if(commands.at(i)->get_name().compare(argv->at(0)) == 0){
+    tmp_cmd = commands.at(i);
+    if(tmp_cmd->get_name().compare(*input_cmd) == 0){
       {
         found = true;
-        if(commands.at(i)->get_argc() > argc - 1)
+        if(tmp_cmd->get_argc() > argc - 1)
           std::cout << "Error, not enough arguments" << std::endl;
         else
-          commands.at(i)->exec(arg);
+          tmp_cmd->exec(arg);
       }
     }
   }
   if (!found) {
-    std::cout << "Error: \"" << argv->at(0) <<"\" not found." << std::endl;
+    std::cout << "Error: \"" << *input_cmd <<"\" not found." << std::endl;
     print_help();
   }
 
@@ -69,10 +75,12 @@ void Console::exec(int argc, std::vector<std::string> *argv) {
 }
 void Console::print_help() {
   int command_count = commands.size();
+  Command* tmp_cmd;
   std::cout << "Available commands: " << std::endl;
   for(int i = 0; i < command_count; i++) {
-    std::cout << commands.at(i)->get_name() << " ";
-    if(commands.at(i)->get_argc() > 0)
+    tmp_cmd = commands.at(i);
+    std::cout << tmp_cmd->get_name() << " ";
+    if(tmp_cmd->get_argc() > 0)
       std::cout << "[arg]";
     std::cout << std::endl;
   }
