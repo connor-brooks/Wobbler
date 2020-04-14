@@ -60,8 +60,10 @@ Additionally, the synth can be controlled via the command line, below is a list 
 | cutoff       | 0.0 - 1.0 | Set the cutoff                                    |
 | lfo          | 0.0 - 1.0 | Set the LFO speed                                 |
 
+If you are soley interested in using the synth via scripting or command line, it is possible to start the program without a GUI, in order to do this, run `./wob --no-gui`
+
 ## Scripting
-As Wobbler accepts commands from standard console input, is possible to script sequences and synth changes using any language you'd like. To see an example of this, please check out "test.sh"
+As Wobbler accepts commands from standard console input, is possible to script sequences and synth changes using any language you'd like. To see an example of this, please check out `test.sh`
 
 ## Notes
 * Sometimes notes will randomly be dropped, especially when notes are played very fast. This is due to a bug in Maximilian's envelope function. Currently there is little that can be done about this, however, eventually Maximilian's synthesis functions will be replaced by custom Wobbler specific functions, remedying this issue.
