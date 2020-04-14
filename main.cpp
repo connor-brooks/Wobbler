@@ -17,6 +17,7 @@
 #include "midi.h"
 #include "console.h"
 
+
 void audio_callback(void *user_data, Uint8 *raw_buffer, int bytes)
 {
   /* Extract relevent data from user pointer */
@@ -66,6 +67,13 @@ void update(User_pointers* user_ptrs) {
 int main(int argc, char* args[])
 {
   bool should_quit = false;
+  bool show_gui = true;
+  
+  /* disable gui if requested */
+  if(argc > 1) {
+    if(strcmp(args[1], "--no-gui") == 0) 
+      show_gui = false;
+  }
 
   /* create needed struct */
   struct User_pointers user_pointers;
@@ -74,9 +82,12 @@ int main(int argc, char* args[])
   user_pointers.synth = &synth;
 
   /* main init */
-  init_sdl(&user_pointers);
+  if(show_gui) {
+    init_sdl(&user_pointers);
+    init_gl();
+  }
+
   SDL_Event events;
-  init_gl();
   init_audio(&user_pointers);
   SDL_PauseAudio(0);
 
@@ -218,10 +229,12 @@ int main(int argc, char* args[])
     midi->handle_messages();
 
     /* Update and render */
-    update(&user_pointers);
-    render(&user_pointers);
-    SDL_GL_SwapWindow(user_pointers.window);
-    SDL_Delay(50);
+    if(show_gui) {
+      update(&user_pointers);
+      render(&user_pointers);
+      SDL_GL_SwapWindow(user_pointers.window);
+    }
+      SDL_Delay(50);
   }
 
   console_thread.detach();
