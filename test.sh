@@ -1,6 +1,6 @@
 #!/bin/bash
 # Plays C major chord repeatedly, randomising the synth's parameters every time.
-# To use, run "./test.sh | ./wob"
+# To use, run "./test.sh | ./wob --no-gui"
 
 sleep 2
 
