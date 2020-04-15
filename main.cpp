@@ -68,10 +68,10 @@ int main(int argc, char* args[])
 {
   bool should_quit = false;
   bool show_gui = true;
-  
+
   /* disable gui if requested */
   if(argc > 1) {
-    if(strcmp(args[1], "--no-gui") == 0) 
+    if(strcmp(args[1], "--no-gui") == 0)
       show_gui = false;
   }
 
@@ -90,6 +90,7 @@ int main(int argc, char* args[])
   SDL_Event events;
   init_audio(&user_pointers);
   SDL_PauseAudio(0);
+  srand(time(NULL));
 
   /* setup releative mouse pos */
   float mouse_x, mouse_y;
@@ -234,7 +235,7 @@ int main(int argc, char* args[])
       render(&user_pointers);
       SDL_GL_SwapWindow(user_pointers.window);
     }
-      SDL_Delay(50);
+    SDL_Delay(50);
   }
 
   console_thread.detach();
