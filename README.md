@@ -1,9 +1,12 @@
 ![](wobbler.png)
 *A software synth (WORK IN PROGRESS)*
 
-Wobbler is a software synth. At the moment, don't bother downloading it, as it's in a heavy state of development.
+Wobbler is a software FM synthesiser. It can be controlled by the user in a number of ways:
+* GUI and computer keyboard
+* MIDI keyboard
+* Scriptable command line interface
 
-Some of the features that are currently implemented: 
+Although Wobbler is still under heavy development, most of the core features have been implemented: 
 * User selectable waveforms (sine, square, sawtooth, triangle)
 * Detune
 * FM synthesis
