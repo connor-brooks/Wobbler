@@ -23,6 +23,11 @@ Wobbler is a GUI for Mick Grierson's [Maximilian](https://github.com/micknoise/M
 * rtaudio
 * rtmidi 
 
+## How to use
+* Clone the repo: `https://github.com/connor-brooks/Wobbler.git`
+* Enter the director: `cd Wobbler
+Note: Currently there is no Makefile for Linux, but a slight bit of tweaking and it should compile fine.
+
 ## What is Wobbler for?
 In short, it is to enable quick experimentation with synthesis parameters, in a way that mimics the experience of a hardware synth. In addition to offering a typical GUI, the synth can also be controlled via MIDI and your terminals standard input. This opens up allows the synth to be easily scripted.
 
@@ -70,3 +75,4 @@ As Wobbler accepts commands from standard console input, is possible to script s
 
 ## Notes
 * Sometimes notes will randomly be dropped, especially when notes are played very fast. This is due to a bug in Maximilian's envelope function. Currently there is little that can be done about this, however, eventually Maximilian's synthesis functions will be replaced by custom Wobbler specific functions, remedying this issue.
+* Currently there is no Linux Makefile, however Wobbler should compile fine on any linux machine given a bit of tinkering. One will be added shortly. 
