@@ -2,6 +2,7 @@
 #define CONSOLE_H
 #include <iostream>
 #include <vector>
+#include <map>
 #include "defs.h"
 #include "command.h"
 
@@ -10,7 +11,7 @@ class Console {
   private:
     bool *should_quit;
     void parse(std::string cmd);
-    std::vector <Command*> commands;
+    std::map<std::string, Command*> commands;
 
   public:
     Console();

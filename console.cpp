@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <string.h>
+#include <map>
 #include "console.h"
 #include "defs.h"
 #include "command.h"
@@ -39,12 +39,10 @@ void Console::parse(std::string cmd) {
 
 void Console::add_command(std::string command_name, int arg_count, std::function <void (float)> callback) {
   Command* tmp = new Command(command_name, arg_count, callback);
-  commands.push_back(tmp);
+  commands.insert(std::pair<std::string, Command*> (command_name, tmp));
 }
 
 void Console::exec(int argc, std::vector<std::string> *argv) {
-  int command_count = commands.size();
-  bool found = false;
   float arg;
   Command* tmp_cmd;
   std::string* input_cmd;
@@ -53,36 +51,25 @@ void Console::exec(int argc, std::vector<std::string> *argv) {
   arg = (argc > 1)? stof(argv->at(1)) :  0.0f;
   input_cmd = &argv->at(0);
 
-  /* check command exists, check right arg count, execute command */
-  for(int i = 0; i < command_count; i++) {
-    tmp_cmd = commands.at(i);
-    if(tmp_cmd->get_name().compare(*input_cmd) == 0){
-      {
-        found = true;
-        if(tmp_cmd->get_argc() > argc - 1)
-          std::cout << "Error, not enough arguments" << std::endl;
-        else
-          tmp_cmd->exec(arg);
-      }
-    }
+  if(commands.count(*input_cmd) > 0) {
+    tmp_cmd = commands.at(*input_cmd);
+    if(tmp_cmd->get_argc() > argc - 1)
+      std::cout << "Error, not enough arguments" << std::endl;
+    else
+      tmp_cmd->exec(arg);
   }
-  if (!found) {
+  else {
     std::cout << "Error: \"" << *input_cmd <<"\" not found." << std::endl;
-    print_help();
   }
-
   delete argv;
 }
+
 void Console::print_help() {
-  int command_count = commands.size();
-  Command* tmp_cmd;
   std::cout << "Available commands: " << std::endl;
-  for(int i = 0; i < command_count; i++) {
-    tmp_cmd = commands.at(i);
-    std::cout << tmp_cmd->get_name() << " ";
-    if(tmp_cmd->get_argc() > 0)
+  for(auto& tmp_cmd: commands) {
+    std::cout << tmp_cmd.second->get_name() << " ";
+    if(tmp_cmd.second->get_argc() > 0)
       std::cout << "[arg]";
     std::cout << std::endl;
   }
-
 }
