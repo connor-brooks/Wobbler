@@ -25,7 +25,7 @@ void Console::set_should_quit(bool *ptr) {
 void Console::parse(std::string cmd) {
   std::string tmp;
   std::stringstream stream(cmd);
-  std::vector<std::string> *argv = new std::vector<std::string>;
+  auto *argv = new std::vector<std::string>;
   int argc;
 
   /* Split to vector */
