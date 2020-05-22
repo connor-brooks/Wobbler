@@ -16,16 +16,20 @@ Although Wobbler is still under heavy development, most of the core features hav
 * MIDI note input
 * Command line parameter and note control
 
-Wobbler is a GUI for Mick Grierson's [Maximilian](https://github.com/micknoise/Maximilian), a C++ DSP and synthesis library. However, due to some bugs in Maximilian's library, synthesis functions will be rewritten from scratch for wobbler (at some point).
+Wobbler is a GUI for Mick Grierson's [Maximilian](https://github.com/micknoise/Maximilian), a C++ DSP and synthesis library. However, due to some bugs in Maximilian's library, synthesis functions will be rewritten from scratch for Wobbler (at some point).
 
 ## Dependencies 
 * SDL2
-* rtaudio
 * rtmidi 
 
-## How to use
+## How to use (Mac)
+* Install dependencies: `brew install sdl2 rtmidi`
 * Clone the repo: `https://github.com/connor-brooks/Wobbler.git`
-* Enter the director: `cd Wobbler
+* Enter the director: `cd Wobbler`
+* Build: `make`
+* To run in GUI mode: `./wob`
+* To run in CLI mode: `./wob --no-gui`
+
 Note: Currently there is no Makefile for Linux, but a slight bit of tweaking and it should compile fine.
 
 ## What is Wobbler for?
@@ -75,4 +79,4 @@ As Wobbler accepts commands from standard console input, is possible to script s
 
 ## Notes
 * Sometimes notes will randomly be dropped, especially when notes are played very fast. This is due to a bug in Maximilian's envelope function. Currently there is little that can be done about this, however, eventually Maximilian's synthesis functions will be replaced by custom Wobbler specific functions, remedying this issue.
-* Currently there is no Linux Makefile, however Wobbler should compile fine on any linux machine given a bit of tinkering. One will be added shortly. 
+* Currently there is no Linux Makefile, however Wobbler should compile fine on any Linux machine given a bit of tinkering. One will be added shortly. 
