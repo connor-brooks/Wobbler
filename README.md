@@ -35,12 +35,12 @@ Note: Currently there is no Makefile for Linux, but a slight bit of tweaking and
 ## What is Wobbler for?
 In short, it is to enable quick experimentation with synthesis parameters, in a way that mimics the experience of a hardware synth. In addition to offering a typical GUI, the synth can also be controlled via MIDI and your terminals standard input. This opens up allows the synth to be easily scripted.
 
-# Controls
+## Controls
 
-## MIDI
+### MIDI
 Notes can be played by connecting a MIDI keyboard to your computer before starting Wobbler, changing synth parameters via CC will be added soon.
 
-## GUI
+### GUI
 Currently the GUI controls aren't labeled, however, here is a reference:
 
 ![](screenshot.png)
@@ -49,11 +49,11 @@ Currently the GUI controls aren't labeled, however, here is a reference:
 |------------------|----------------|--------------------|-------------------------|-------------|--------------|------------------|----------|
 
 
-## Computer Keyboard
+### Computer Keyboard
 If you don't have a MIDI keyboard, you can use your computer's keyboard to play notes and change octave:
 ![](keyboard.png)
 
-## Command line
+### Command line
 Additionally, the synth can be controlled via the command line, below is a list of commands:
 
 | Command name | Arguments | Description                                       |
@@ -74,7 +74,7 @@ Additionally, the synth can be controlled via the command line, below is a list 
 
 If you are soley interested in using the synth via scripting or command line, it is possible to start the program without a GUI, in order to do this, run `./wob --no-gui`
 
-## Scripting
+### Scripting
 As Wobbler accepts commands from standard console input, is possible to script sequences and synth changes using any language you'd like. To see an example of this, please check out `test.sh`
 
 ## Notes
